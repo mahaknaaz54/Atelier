@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Atelier Visualizer | Digital Tonalism Excellence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-container": "#ff5447",
+              "secondary-fixed": "#eedbff",
+              "on-error": "#690005",
+              "tertiary-container": "#9f8e7c",
+              "on-primary-container": "#5c0002",
+              "inverse-on-surface": "#313030",
+              "primary-fixed-dim": "#ffb4aa",
+              "on-tertiary": "#3a2e21",
+              "on-tertiary-fixed": "#241a0e",
+              "secondary-container": "#543b71",
+              "on-secondary-fixed-variant": "#543b71",
+              "outline-variant": "#5b403c",
+              "error-container": "#93000a",
+              "surface-variant": "#353534",
+              "surface-dim": "#131313",
+              "on-secondary": "#3c2559",
+              "surface-container-low": "#1c1b1b",
+              "on-secondary-fixed": "#260e43",
+              "inverse-primary": "#bb1917",
+              "on-surface": "#e5e2e1",
+              "on-background": "#e5e2e1",
+              "surface": "#131313",
+              "on-error-container": "#ffdad6",
+              "outline": "#ab8984",
+              "on-primary-fixed": "#410001",
+              "tertiary-fixed-dim": "#d7c3b0",
+              "primary-fixed": "#ffdad5",
+              "primary": "#ffb4aa",
+              "surface-container-lowest": "#0e0e0e",
+              "error": "#ffb4ab",
+              "surface-tint": "#ffb4aa",
+              "secondary-fixed-dim": "#d8bafa",
+              "on-primary-fixed-variant": "#930007",
+              "on-primary": "#690003",
+              "tertiary-fixed": "#f4dfcb",
+              "surface-container-high": "#2a2a2a",
+              "on-secondary-container": "#c6a9e7",
+              "surface-container-highest": "#353534",
+              "tertiary": "#d7c3b0",
+              "on-tertiary-fixed-variant": "#524436",
+              "background": "#131313",
+              "on-surface-variant": "#e4beb8",
+              "surface-container": "#201f1f",
+              "secondary": "#d8bafa",
+              "surface-bright": "#393939",
+              "on-tertiary-container": "#33281b",
+              "inverse-surface": "#e5e2e1"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(28, 27, 27, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .coral-glow {
+            box-shadow: 0 20px 40px rgba(255, 180, 170, 0.08);
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            font-family: 'Manrope', sans-serif;
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-zinc-900/40 backdrop-blur-xl flex justify-between items-center px-8 h-20 w-full shadow-[0_20px_40px_rgba(255,180,170,0.08)]">
+<div class="text-2xl font-bold tracking-tighter text-zinc-100 font-['Space_Grotesk']">
+            Atelier Visualizer
+        </div>
+<div class="hidden md:flex gap-10 items-center">
+<a class="font-['Space_Grotesk'] tracking-tight text-sm uppercase font-bold text-[#FFB4AA] border-b-2 border-[#FFB4AA] pb-1 transition-all" href="#">Projects</a>
+<a class="font-['Space_Grotesk'] tracking-tight text-sm uppercase font-bold text-zinc-400 hover:text-zinc-100 transition-colors" href="#">Explore</a>
+<a class="font-['Space_Grotesk'] tracking-tight text-sm uppercase font-bold text-zinc-400 hover:text-zinc-100 transition-colors" href="#">Community</a>
+</div>
+<button class="bg-primary-container text-on-primary-container px-6 py-2.5 rounded-lg font-['Space_Grotesk'] font-bold text-sm uppercase tracking-wider hover:brightness-110 active:scale-90 transition-all coral-glow">
+            Try for Free
+        </button>
+</nav>
+<main class="relative">
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+<!-- Background Image with Tonal Overlay -->
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover opacity-60 grayscale-[0.3]" data-alt="Luxurious modern minimalist interior with soft lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfhQEE_JVJa-v5Ub2WyeC9Kol6wPTgxjH4JVL9zy0kC_H-JnyI8Fblo_VBWWjvYmaD7j9foIcUr2XBCZQyVeDmj_hFHUtpCp4VOO8AA0Hh_iNv8_iyWSowrvDIscNdJetKJsJmYg_Kg5emOiC_CmTqfKBwEb3qMCYPfMn2am0FLyQypSIY9srijrhwh4lWjYVQ9dvBW2xO6SFufKW0M_0uuHt63QdcyYCEKwQ0dswFDy5sdahan9gMrPFd5RvF9Gaj7SLLSlOFgw"/>
+<div class="absolute inset-0 bg-gradient-to-r from-surface via-surface/80 to-transparent"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent"></div>
+</div>
+<div class="container mx-auto px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12">
+<div class="lg:col-span-7 flex flex-col justify-center">
+<span class="font-['Space_Grotesk'] text-primary text-sm uppercase tracking-[0.3em] mb-6 block font-bold">The Future of Spatial Design</span>
+<h1 class="font-['Space_Grotesk'] text-6xl md:text-8xl font-bold tracking-tighter leading-[0.9] text-on-surface mb-8">
+                        DIGITAL <br/> <span class="text-primary">TONALISM.</span>
+</h1>
+<p class="font-['Manrope'] text-lg text-zinc-400 max-w-xl mb-12 leading-relaxed">
+                        Experience hyper-realistic interior color visualization. Our AI-driven engine renders light and texture with architectural precision, allowing you to curate atmospheres with a single click.
+                    </p>
+<div class="flex flex-wrap gap-6">
+<button class="bg-primary-container text-on-primary-container px-10 py-4 rounded-lg font-['Space_Grotesk'] font-bold uppercase tracking-widest hover:brightness-110 transition-all coral-glow">
+                            Try for Free
+                        </button>
+<button class="border border-outline-variant bg-white/5 backdrop-blur-md text-on-surface px-10 py-4 rounded-lg font-['Space_Grotesk'] font-bold uppercase tracking-widest hover:bg-white/10 transition-all">
+                            Explore Designs
+                        </button>
+</div>
+</div>
+<!-- Floating Interaction Element -->
+<div class="lg:col-span-5 hidden lg:flex items-center justify-end">
+<div class="glass-panel p-8 rounded-xl border border-white/10 w-80 coral-glow transform translate-y-12">
+<div class="flex justify-between items-center mb-6">
+<span class="font-['Space_Grotesk'] text-xs font-bold uppercase tracking-widest text-zinc-500">Active Preset</span>
+<span class="material-symbols-outlined text-primary">auto_awesome</span>
+</div>
+<h3 class="font-['Space_Grotesk'] text-xl font-bold text-zinc-100 mb-2">Nordic Dusk</h3>
+<p class="text-zinc-500 text-sm mb-6">Muted lavenders and deep charcoals for high-end serenity.</p>
+<div class="flex gap-3 mb-8">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest"></div>
+<div class="w-10 h-10 rounded-full bg-secondary-container"></div>
+<div class="w-10 h-10 rounded-full bg-primary shadow-[0_0_15px_#FFB4AA]"></div>
+</div>
+<div class="h-1 w-full bg-zinc-800 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-2/3"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Feature Bento Grid -->
+<section class="py-32 bg-surface-container-low">
+<div class="container mx-auto px-8">
+<div class="mb-20 max-w-2xl">
+<h2 class="font-['Space_Grotesk'] text-4xl font-bold tracking-tight text-on-surface mb-6">Engineered for Creative Precision.</h2>
+<p class="text-zinc-400 text-lg">Beyond a simple renderer. Atelier is an ecosystem where light meets logic.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Feature Card 1 -->
+<div class="md:col-span-2 bg-surface-container-high p-12 rounded-2xl relative overflow-hidden group">
+<div class="relative z-10 max-w-md">
+<h3 class="font-['Space_Grotesk'] text-3xl font-bold mb-4">AI-Assisted Material Sync</h3>
+<p class="text-zinc-400 mb-8">Our neural network analyzes your room's natural lighting and automatically suggests material finishes that maintain the designer's intent.</p>
+<span class="font-['Space_Grotesk'] text-primary text-xs font-bold uppercase tracking-widest flex items-center gap-2">
+                                Discover Engine <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</span>
+</div>
+<img class="absolute top-0 right-0 w-1/2 h-full object-cover opacity-20 grayscale group-hover:opacity-40 transition-opacity" data-alt="Abstract close up of fabric textures and light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTJjnGD-iGSVQrSOqrkaxx9RaEzvK8G500mkkytzlKPk-8RWUXbiFdo_TrArDs6bxz3N32bncRr43dqxYzWoFeQ2mNS4zuqu3AW8UizNUAwmDMznIrARseeXgjT2PP8ciyVYYrDVOsH-XniV-CFJs4VHwI107sKC5WQQGHif9C6YUWrhI-rOBJ9Hyn9KttHBCD1bilWcN1vzsyNLuo5K5-w2hhHH9aJ1K69BZG5IfsQ9NGM9oAjeOpYIjhyWP9whMTWx7vOgZnoQ"/>
+</div>
+<!-- Feature Card 2 -->
+<div class="bg-surface-container-high p-12 rounded-2xl border-b-4 border-secondary transition-all hover:-translate-y-2">
+<span class="material-symbols-outlined text-4xl text-secondary mb-6">texture</span>
+<h3 class="font-['Space_Grotesk'] text-2xl font-bold mb-4">Ultra-HD Library</h3>
+<p class="text-zinc-400">8K texture maps with full PBR properties for realistic interaction with scene lighting.</p>
+</div>
+<!-- Feature Card 3 -->
+<div class="bg-surface-container-high p-12 rounded-2xl border-b-4 border-primary-container transition-all hover:-translate-y-2">
+<span class="material-symbols-outlined text-4xl text-primary mb-6">light_mode</span>
+<h3 class="font-['Space_Grotesk'] text-2xl font-bold mb-4">Ray-Traced Precision</h3>
+<p class="text-zinc-400">Real-time path tracing for global illumination that mirrors physical reality perfectly.</p>
+</div>
+<!-- Feature Card 4 -->
+<div class="md:col-span-2 bg-zinc-950 p-12 rounded-2xl relative overflow-hidden flex flex-col justify-end min-h-[400px]">
+<div class="absolute inset-0">
+<img class="w-full h-full object-cover opacity-30" data-alt="Modern dark bedroom with smart lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYG-hu2oRgHV2u3MUsqUNITYNfGZp8sSqaSCmzAMXqYodnp_zx_k_EzakCZSum0w37s1DP21OCs0oB7I3R7z3O8y6b2I6JT7H6tLTVzYZ6hh2lDhC-kwN-0DxH-8ke0jvu75iRUWxoeLaw8sh3p8MFsTJkkPyVSHd-KEm-4QPEqO7-1TZDZKAGR_2DpYUJHL91ag4oaMCb080I0ZjINPEt4IaXumOrJaJ9qxSm9mp9mbAyLFB2eA_vq6RWeouaQjpTZevaRwezKQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-zinc-950 to-transparent"></div>
+</div>
+<div class="relative z-10">
+<h3 class="font-['Space_Grotesk'] text-3xl font-bold mb-4">Cloud Compute Rendering</h3>
+<p class="text-zinc-400 max-w-lg mb-6">Finish complex 4K animations in minutes, not hours, using our distributed GPU network.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Tool Preview Section -->
+<section class="py-32 bg-surface">
+<div class="container mx-auto px-8">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+<div>
+<h2 class="font-['Space_Grotesk'] text-5xl font-bold tracking-tight mb-10 leading-tight">Pro-Grade Tools for <br/><span class="text-secondary">Visionary Designers.</span></h2>
+<div class="space-y-12">
+<div class="flex gap-6">
+<div class="flex-shrink-0 w-12 h-12 bg-surface-container-high rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">palette</span>
+</div>
+<div>
+<h4 class="font-['Space_Grotesk'] text-xl font-bold mb-2">Adaptive Palettes</h4>
+<p class="text-zinc-500">Create color schemes that intelligently react to room volume and window placement.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="flex-shrink-0 w-12 h-12 bg-surface-container-high rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">style</span>
+</div>
+<div>
+<h4 class="font-['Space_Grotesk'] text-xl font-bold mb-2">Preset Ecosystem</h4>
+<p class="text-zinc-500">Access thousands of pre-curated designer themes or build your own proprietary library.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative">
+<!-- Simulated Interface -->
+<div class="bg-surface-container-lowest rounded-2xl border border-white/5 p-4 coral-glow overflow-hidden shadow-2xl">
+<div class="flex items-center gap-2 mb-4 px-2">
+<div class="w-3 h-3 rounded-full bg-error"></div>
+<div class="w-3 h-3 rounded-full bg-zinc-700"></div>
+<div class="w-3 h-3 rounded-full bg-zinc-700"></div>
+<span class="ml-auto font-['Space_Grotesk'] text-[10px] uppercase tracking-widest text-zinc-600">Renderer v4.2 Stable</span>
+</div>
+<img class="w-full aspect-video object-cover rounded-lg mb-6" data-alt="Interior architectural rendering software interface preview" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_bTt-6nd-VDQwi2Wgv6609Cx67nFLvSJpDPqi--qPAyjA0eQ_IcDQ2S5h0LBiM0OZYen0RAlL3VtkVbEA8oegdSVhOhltkAX5Et6BLoVZgGdVBVSZ75Za9kz6el4Tf9zf59MrBZ_bZKhmWbwMjfPhQJNzH86UvMGzRr7Kq3jQ1sDAeQydvNFAHfsiYBaQMArEj0IJ9j0MwWY9Ur446hJrOHPF7nBnGMToaf9d1pBd0xmqOdT7liqKv-yH5eBGo5XxSi0zUwfxmA"/>
+<div class="grid grid-cols-4 gap-4 p-2">
+<div class="h-16 bg-surface-container-high rounded-lg border border-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-weight="fill">layers</span>
+</div>
+<div class="h-16 bg-surface-container-high rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-zinc-600">blur_on</span>
+</div>
+<div class="h-16 bg-surface-container-high rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-zinc-600">view_in_ar</span>
+</div>
+<div class="h-16 bg-primary-container rounded-lg flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-on-primary">play_arrow</span>
+</div>
+</div>
+</div>
+<!-- Decorative large text -->
+<div class="absolute -bottom-10 -right-10 font-['Space_Grotesk'] text-9xl font-bold text-white/[0.02] select-none z-[-1]">
+                            VISUAL
+                        </div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-40 bg-surface">
+<div class="container mx-auto px-8">
+<div class="bg-gradient-to-br from-surface-container-high to-surface-container-low p-16 md:p-24 rounded-3xl relative overflow-hidden text-center border border-white/5">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
+<h2 class="font-['Space_Grotesk'] text-4xl md:text-6xl font-bold mb-8 max-w-3xl mx-auto leading-tight">Elevate your visualization workflow today.</h2>
+<p class="text-zinc-400 text-lg mb-12 max-w-xl mx-auto">Join over 15,000 architectural studios pushing the boundaries of tonal spatial design.</p>
+<div class="flex flex-col sm:flex-row gap-6 justify-center">
+<button class="bg-primary-container text-on-primary-container px-12 py-5 rounded-lg font-['Space_Grotesk'] font-bold uppercase tracking-widest hover:scale-105 transition-transform coral-glow">
+                            Create Free Project
+                        </button>
+<button class="bg-white/5 border border-outline-variant text-zinc-100 px-12 py-5 rounded-lg font-['Space_Grotesk'] font-bold uppercase tracking-widest hover:bg-white/10 transition-colors">
+                            Book a Demo
+                        </button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-16 px-8 border-t border-zinc-800/50 bg-zinc-950">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 max-w-7xl mx-auto">
+<div>
+<div class="text-lg font-bold text-zinc-100 font-['Space_Grotesk'] mb-6">Atelier Visualizer</div>
+<p class="font-['Manrope'] text-sm text-zinc-500 leading-relaxed">
+                    Defining the next era of high-end architectural rendering through digital tonalism and neural lighting.
+                </p>
+</div>
+<div>
+<h5 class="font-['Space_Grotesk'] text-xs font-bold text-zinc-200 uppercase tracking-widest mb-6">Navigation</h5>
+<ul class="space-y-4">
+<li><a class="font-['Manrope'] text-sm text-zinc-500 hover:text-[#D8BAFA] transition-colors" href="#">Home</a></li>
+<li><a class="font-['Manrope'] text-sm text-zinc-500 hover:text-[#D8BAFA] transition-colors" href="#">Projects</a></li>
+<li><a class="font-['Manrope'] text-sm text-zinc-500 hover:text-[#D8BAFA] transition-colors" href="#">Explore</a></li>
+<li><a class="font-['Manrope'] text-sm text-zinc-500 hover:text-[#D8BAFA] transition-colors" href="#">Community</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-['Space_Grotesk'] text-xs font-bold text-zinc-200 uppercase tracking-widest mb-6">Legal</h5>
+<ul class="space-y-4">
+<li><a class="font-['Manrope'] text-sm text-zinc-500 hover:text-[#D8BAFA] transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="font-['Manrope'] text-sm text-zinc-500 hover:text-[#D8BAFA] transition-colors" href="#">Terms of Service</a></li>
+<li><a class="font-['Manrope'] text-sm text-zinc-500 hover:text-[#D8BAFA] transition-colors" href="#">Cookie Settings</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-['Space_Grotesk'] text-xs font-bold text-zinc-200 uppercase tracking-widest mb-6">Connect</h5>
+<ul class="space-y-4">
+<li><a class="font-['Manrope'] text-sm text-zinc-500 hover:text-[#D8BAFA] transition-colors" href="#">Twitter / X</a></li>
+<li><a class="font-['Manrope'] text-sm text-zinc-500 hover:text-[#D8BAFA] transition-colors" href="#">Instagram</a></li>
+<li><a class="font-['Manrope'] text-sm text-zinc-500 hover:text-[#D8BAFA] transition-colors" href="#">Contact Us</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-zinc-800/50 flex flex-col md:flex-row justify-between items-center gap-6">
+<p class="font-['Manrope'] text-sm text-zinc-500">
+                © 2024 Atelier Visualizer. Digital Tonalism Excellence.
+            </p>
+<div class="flex gap-8">
+<span class="font-['Space_Grotesk'] text-[10px] text-primary uppercase tracking-[0.2em]">Stable Release 2.4.1</span>
+</div>
+</div>
+</footer>
+</body></html>

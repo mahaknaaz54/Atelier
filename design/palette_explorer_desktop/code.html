@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary": "#d7c3b0",
+              "background": "#131313",
+              "on-tertiary-fixed-variant": "#524436",
+              "surface-container-highest": "#353534",
+              "surface-container-high": "#2a2a2a",
+              "on-secondary-container": "#c6a9e7",
+              "on-primary-fixed-variant": "#930007",
+              "on-primary": "#690003",
+              "tertiary-fixed": "#f4dfcb",
+              "surface-bright": "#393939",
+              "inverse-surface": "#e5e2e1",
+              "on-tertiary-container": "#33281b",
+              "on-surface-variant": "#e4beb8",
+              "surface-container": "#201f1f",
+              "secondary": "#d8bafa",
+              "primary-fixed": "#ffdad5",
+              "primary": "#ffb4aa",
+              "tertiary-fixed-dim": "#d7c3b0",
+              "on-error-container": "#ffdad6",
+              "on-primary-fixed": "#410001",
+              "outline": "#ab8984",
+              "surface": "#131313",
+              "surface-tint": "#ffb4aa",
+              "secondary-fixed-dim": "#d8bafa",
+              "surface-container-lowest": "#0e0e0e",
+              "error": "#ffb4ab",
+              "on-secondary-fixed-variant": "#543b71",
+              "outline-variant": "#5b403c",
+              "secondary-container": "#543b71",
+              "on-tertiary-fixed": "#241a0e",
+              "inverse-primary": "#bb1917",
+              "surface-container-low": "#1c1b1b",
+              "on-secondary-fixed": "#260e43",
+              "on-surface": "#e5e2e1",
+              "on-background": "#e5e2e1",
+              "surface-dim": "#131313",
+              "on-secondary": "#3c2559",
+              "error-container": "#93000a",
+              "surface-variant": "#353534",
+              "secondary-fixed": "#eedbff",
+              "primary-container": "#FF4D40",
+              "on-tertiary": "#3a2e21",
+              "primary-fixed-dim": "#ffb4aa",
+              "tertiary-container": "#9f8e7c",
+              "on-primary-container": "#5c0002",
+              "inverse-on-surface": "#313030",
+              "on-error": "#690005"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        background-color: #131313;
+        background-image: radial-gradient(circle at 50% 50%, rgba(255, 77, 64, 0.03) 0%, transparent 100%);
+      }
+      .glass-card {
+        background: rgba(42, 42, 42, 0.4);
+        backdrop-filter: blur(20px);
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+    </style>
+</head>
+<body class="font-body text-on-surface selection:bg-primary-container selection:text-white">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-8 h-20 bg-zinc-900/40 backdrop-blur-xl shadow-[0_20px_40px_rgba(255,180,170,0.08)]">
+<div class="text-2xl font-bold tracking-tighter text-zinc-100 font-['Space_Grotesk']">
+        Atelier Visualizer
+    </div>
+<div class="hidden md:flex items-center gap-10">
+<a class="font-['Space_Grotesk'] tracking-tight text-sm uppercase font-bold text-zinc-400 hover:text-zinc-100 transition-colors" href="#">Projects</a>
+<a class="font-['Space_Grotesk'] tracking-tight text-sm uppercase font-bold text-[#FFB4AA] border-b-2 border-[#FFB4AA] pb-1" href="#">Explore</a>
+<a class="font-['Space_Grotesk'] tracking-tight text-sm uppercase font-bold text-zinc-400 hover:text-zinc-100 transition-colors" href="#">Community</a>
+</div>
+<button class="bg-primary-container text-white px-6 py-2 rounded-xl font-headline font-bold text-sm uppercase tracking-wider scale-95 active:scale-90 transition-transform hover:shadow-[0_0_15px_rgba(255,77,64,0.4)]">
+        Try for Free
+    </button>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-20 h-[calc(100vh-5rem)] w-64 z-40 hidden lg:flex flex-col p-6 gap-8 bg-zinc-900/40 backdrop-blur-xl">
+<div>
+<h3 class="font-['Space_Grotesk'] text-xs font-medium uppercase tracking-widest text-[#D8BAFA] mb-1">Design Tools</h3>
+<p class="text-[10px] text-zinc-500 font-headline uppercase tracking-tighter">Palettes &amp; Presets</p>
+</div>
+<div class="flex flex-col gap-4">
+<a class="flex items-center gap-4 p-3 text-[#D8BAFA] bg-zinc-800/60 rounded-lg group transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">palette</span>
+<span class="font-['Space_Grotesk'] text-xs font-medium uppercase tracking-widest">Palettes</span>
+</a>
+<a class="flex items-center gap-4 p-3 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/30 rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">style</span>
+<span class="font-['Space_Grotesk'] text-xs font-medium uppercase tracking-widest">Presets</span>
+</a>
+<a class="flex items-center gap-4 p-3 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/30 rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">texture</span>
+<span class="font-['Space_Grotesk'] text-xs font-medium uppercase tracking-widest">Materials</span>
+</a>
+<a class="flex items-center gap-4 p-3 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/30 rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">light_mode</span>
+<span class="font-['Space_Grotesk'] text-xs font-medium uppercase tracking-widest">Lighting</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="lg:pl-64 pt-28 pb-32 px-8 max-w-[1600px] mx-auto">
+<!-- Header Section -->
+<section class="mb-16">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="max-w-2xl">
+<span class="text-primary-container font-headline font-bold tracking-[0.3em] uppercase text-xs">Curated Selection</span>
+<h2 class="text-6xl md:text-8xl font-headline font-bold text-white tracking-tighter mt-4 mb-6 leading-none uppercase">Palette Explorer</h2>
+<p class="text-zinc-400 text-lg max-w-xl font-body">A sanctuary of color theories for the modern architect. Curated moods designed to evoke emotion and define spatial identity.</p>
+</div>
+<div class="flex gap-4">
+<button class="w-12 h-12 rounded-xl border border-zinc-800 flex items-center justify-center text-white hover:bg-zinc-800 transition-colors">
+<span class="material-symbols-outlined">tune</span>
+</button>
+<button class="bg-white text-background px-8 h-12 rounded-xl font-bold font-headline uppercase text-xs tracking-widest active:scale-95 transition-transform">New Collection</button>
+</div>
+</div>
+</section>
+<!-- Palette Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Palette Card 1: Desert Nomad (Featured Large) -->
+<div class="md:col-span-12 group relative overflow-hidden rounded-2xl bg-surface-container-low border border-zinc-800/50 hover:border-primary-container/30 transition-all duration-500">
+<div class="flex flex-col lg:flex-row h-full">
+<div class="lg:w-7/12 relative h-[400px] lg:h-auto overflow-hidden">
+<img alt="Desert Nomad" class="absolute inset-0 w-full h-full object-cover grayscale-[20%] transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeqTwFxbhRar9VlEFp04Lz7C_zRBYh7j-8P2zcUM-uqpKWBKT3Qn0iAMYhU2pJfaZjEFWp-L1DK-m5mOb_iLiS_Z-B6w9BV9c8fQC_yX2OnJUCShFVFXrrFu6ORKOUFB2Veiozc5QWlpwNPbfT9eTgDHUBXV4y_f9uZjo0wRub88FKxFxttZU36pjGiui-7cF3u3y_Tk4sEwd_nkVX_CUVDfpT6fID8DBGNcyuCL9OVgmMEVwhEwlir4-Ebb-Sj_5KJE5eWIQu8Q"/>
+<div class="absolute inset-0 bg-gradient-to-r from-surface-container-low via-transparent to-transparent hidden lg:block"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent lg:hidden"></div>
+</div>
+<div class="lg:w-5/12 p-10 lg:p-16 flex flex-col justify-center">
+<div class="mb-10">
+<span class="text-primary-container text-[10px] font-bold uppercase tracking-[0.2em] mb-4 block">Bohemian &amp; Organic</span>
+<h3 class="text-4xl md:text-5xl font-headline font-bold text-zinc-100 mb-4 tracking-tighter">Desert Nomad</h3>
+<p class="text-zinc-500 text-sm leading-relaxed max-w-sm">Earthy tones derived from sandstone and dry brush. Perfect for expansive, light-filled rooms.</p>
+</div>
+<div class="grid grid-cols-4 gap-4 mb-12">
+<div class="group/swatch">
+<div class="aspect-square rounded-full bg-[#E1C299] shadow-lg mb-2"></div>
+<span class="text-[9px] font-mono text-zinc-600 block text-center">#E1C299</span>
+</div>
+<div class="group/swatch">
+<div class="aspect-square rounded-full bg-[#A38D6F] shadow-lg mb-2"></div>
+<span class="text-[9px] font-mono text-zinc-600 block text-center">#A38D6F</span>
+</div>
+<div class="group/swatch">
+<div class="aspect-square rounded-full bg-[#5C4D3C] shadow-lg mb-2"></div>
+<span class="text-[9px] font-mono text-zinc-600 block text-center">#5C4D3C</span>
+</div>
+<div class="group/swatch">
+<div class="aspect-square rounded-full bg-[#F5F1E9] shadow-lg mb-2"></div>
+<span class="text-[9px] font-mono text-zinc-600 block text-center">#F5F1E9</span>
+</div>
+</div>
+<button class="w-full py-4 rounded-xl bg-zinc-800 text-white font-headline font-bold uppercase text-[10px] tracking-widest hover:bg-primary-container hover:text-white transition-all duration-300">Apply to Workspace</button>
+</div>
+</div>
+</div>
+<!-- Palette Card 2: Arctic Silence -->
+<div class="md:col-span-6 group relative overflow-hidden rounded-2xl bg-surface-container-low border border-zinc-800/50 hover:border-primary-container/30 transition-all duration-500">
+<div class="aspect-video relative overflow-hidden">
+<img alt="Arctic Silence" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZ3VM1z8SQ3sNVKgZ2sKr9uJqfz1v1cIAn00eU6AWcwdabRqfvLe1ArEe_Q0ronHbFeNZG_Q7KMrBZ7IZNhsqeKLWDVjoIvvrDWXbeR4RKodMewYWox6AKXzL0wVokGmx5DDwOiuRRJ-lLgDxLZOPbPVM1KnH6f_ptDdm5G37p-drdo6iHE_aUf7ZhVeqM6EUB9h1f-UPozswu8_wljEad8zOGIWYfZsnlv0_IIMLLhTRIhSeCcEJFxrRAn7RWmaPmDnu6e-uzwQ"/>
+</div>
+<div class="p-8">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="text-3xl font-headline font-bold text-zinc-100 mb-2">Arctic Silence</h3>
+<p class="text-zinc-500 text-sm">Scandinavian minimalism with architectural precision.</p>
+</div>
+<div class="flex -space-x-2">
+<div class="w-8 h-8 rounded-full bg-[#FFFFFF] border-2 border-surface-container-low shadow-sm"></div>
+<div class="w-8 h-8 rounded-full bg-[#E5E5E5] border-2 border-surface-container-low shadow-sm"></div>
+<div class="w-8 h-8 rounded-full bg-[#9DA4A7] border-2 border-surface-container-low shadow-sm"></div>
+</div>
+</div>
+<button class="text-primary-container font-headline font-bold text-[10px] uppercase tracking-widest flex items-center gap-2 group/btn">
+                    Explore Details <span class="material-symbols-outlined text-sm transition-transform group-hover/btn:translate-x-1">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Palette Card 3: Midnight Velvet -->
+<div class="md:col-span-6 group relative overflow-hidden rounded-2xl glass-card border border-zinc-800/50 hover:border-secondary/30 transition-all duration-500">
+<div class="p-8 lg:p-10 flex flex-col h-full">
+<div class="flex justify-between items-center mb-10">
+<span class="px-3 py-1 rounded-full bg-secondary-container/20 text-secondary text-[10px] font-bold uppercase tracking-tighter">Staff Pick</span>
+<span class="material-symbols-outlined text-secondary opacity-40">auto_awesome</span>
+</div>
+<h3 class="text-3xl lg:text-4xl font-headline font-bold text-white mb-6">Midnight Velvet</h3>
+<div class="grid grid-cols-2 gap-3 mb-10">
+<div class="h-20 rounded-xl bg-[#0F0F1A] border border-white/5 flex items-center justify-center group/swatch relative">
+<span class="text-[9px] font-mono text-zinc-600 opacity-0 group-hover/swatch:opacity-100 transition-opacity">#0F0F1A</span>
+</div>
+<div class="h-20 rounded-xl bg-[#2D2D44] border border-white/5 flex items-center justify-center group/swatch relative">
+<span class="text-[9px] font-mono text-zinc-600 opacity-0 group-hover/swatch:opacity-100 transition-opacity">#2D2D44</span>
+</div>
+<div class="h-20 rounded-xl bg-[#D8BAFA] border border-white/5 flex items-center justify-center group/swatch relative">
+<span class="text-background text-[9px] font-mono font-bold">#D8BAFA</span>
+</div>
+<div class="h-20 rounded-xl bg-[#7C5DAD] border border-white/5 flex items-center justify-center group/swatch relative">
+<span class="text-[9px] font-mono text-zinc-400 opacity-0 group-hover/swatch:opacity-100 transition-opacity">#7C5DAD</span>
+</div>
+</div>
+<div class="aspect-video w-full rounded-xl overflow-hidden mt-auto grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+<img alt="Midnight Velvet" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhlth5EmKbaG1urNNLKv7n8ILjbt_-w_riiGUcH3lV4lcTMtCyzk1wt7j43dCdo4YAn7BPdVYVLCviO3FQZe1MJb_uHVeTpf6eN_BBJHdydW_HGAuo9eKKOxJgK4foRfp4XYMNHbO7v8yiYOnmjp9Lmq6GwibTbli1enfXo15czKhao9vVCYtGyU5SrEYok9G4cxPqL16yabWZ0_atDQPXFxKgarlAZLiCgMEV0X9R-pXwYvZLvQzaqcUHFUH_C5dxKZV4JgpWHg"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Extraction CTA -->
+<section class="mt-24 p-12 lg:p-20 rounded-[2.5rem] bg-zinc-950 border border-zinc-800/50 flex flex-col md:flex-row justify-between items-center gap-12 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-96 h-96 bg-primary-container/5 blur-[120px] rounded-full -mr-48 -mt-48"></div>
+<div class="relative z-10 max-w-xl">
+<h2 class="text-4xl lg:text-5xl font-headline font-bold text-white mb-6 tracking-tighter">CAN'T FIND THE PERFECT HUE?</h2>
+<p class="text-zinc-400 text-lg font-body">Use our AI-assisted 'Material Sync' to extract color DNA from any lifestyle image or architectural render.</p>
+</div>
+<div class="relative z-10 w-full max-w-md flex flex-col gap-4">
+<button class="w-full py-5 bg-primary-container text-white font-headline font-bold uppercase tracking-[0.2em] text-xs rounded-xl hover:shadow-[0_15px_30px_rgba(255,77,64,0.2)] transition-all">Start AI Extraction</button>
+<button class="w-full py-5 bg-zinc-800 text-zinc-300 border border-zinc-700 font-headline font-bold uppercase tracking-[0.2em] text-xs rounded-xl hover:bg-zinc-700 transition-colors">Browse Community</button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-16 px-8 border-t border-zinc-800/50 bg-zinc-950">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 max-w-7xl mx-auto">
+<div class="space-y-6">
+<div class="text-lg font-bold text-zinc-100 font-['Space_Grotesk'] uppercase tracking-tighter">Atelier Visualizer</div>
+<p class="font-['Manrope'] text-sm text-zinc-400 leading-relaxed">
+                Redefining spatial visualization through digital tonalism and ultra-fidelity rendering.
+            </p>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-headline text-zinc-100 text-sm font-bold uppercase tracking-widest">Platform</h4>
+<a class="text-zinc-500 hover:text-primary-container transition-colors text-sm font-body" href="#">Projects</a>
+<a class="text-zinc-500 hover:text-primary-container transition-colors text-sm font-body" href="#">Explore</a>
+<a class="text-zinc-500 hover:text-primary-container transition-colors text-sm font-body" href="#">Community</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-headline text-zinc-100 text-sm font-bold uppercase tracking-widest">Resources</h4>
+<a class="text-zinc-500 hover:text-primary-container transition-colors text-sm font-body" href="#">Privacy Policy</a>
+<a class="text-zinc-500 hover:text-primary-container transition-colors text-sm font-body" href="#">Terms of Service</a>
+<a class="text-zinc-500 hover:text-primary-container transition-colors text-sm font-body" href="#">Cookie Settings</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-headline text-zinc-100 text-sm font-bold uppercase tracking-widest">Community</h4>
+<a class="text-zinc-500 hover:text-primary-container transition-colors text-sm font-body" href="#">Contact Us</a>
+<a class="text-zinc-500 hover:text-primary-container transition-colors text-sm font-body" href="#">Instagram</a>
+<a class="text-zinc-500 hover:text-primary-container transition-colors text-sm font-body" href="#">Twitter/X</a>
+</div>
+</div>
+<div class="mt-16 pt-8 border-t border-zinc-800/30 text-center">
+<p class="font-['Manrope'] text-xs text-zinc-600 uppercase tracking-[0.2em]">© 2024 Atelier Visualizer. Digital Tonalism Excellence.</p>
+</div>
+</footer>
+<!-- Floating Action Button -->
+<button class="fixed bottom-10 right-10 z-50 w-16 h-16 bg-primary-container rounded-full flex items-center justify-center text-white shadow-[0_10px_30px_rgba(255,77,64,0.4)] hover:scale-110 active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+</body></html>

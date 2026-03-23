@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Atelier Visualizer | 3D Room Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary": "#d7c3b0",
+              "background": "#131313",
+              "on-tertiary-fixed-variant": "#524436",
+              "surface-container-highest": "#353534",
+              "surface-container-high": "#2a2a2a",
+              "on-secondary-container": "#c6a9e7",
+              "on-primary-fixed-variant": "#930007",
+              "on-primary": "#690003",
+              "tertiary-fixed": "#f4dfcb",
+              "surface-bright": "#393939",
+              "inverse-surface": "#e5e2e1",
+              "on-tertiary-container": "#33281b",
+              "on-surface-variant": "#e4beb8",
+              "surface-container": "#201f1f",
+              "secondary": "#d8bafa",
+              "primary-fixed": "#ffdad5",
+              "primary": "#ffb4aa",
+              "tertiary-fixed-dim": "#d7c3b0",
+              "on-error-container": "#ffdad6",
+              "on-primary-fixed": "#410001",
+              "outline": "#ab8984",
+              "surface": "#131313",
+              "surface-tint": "#ffb4aa",
+              "secondary-fixed-dim": "#d8bafa",
+              "surface-container-lowest": "#0e0e0e",
+              "error": "#ffb4ab",
+              "on-secondary-fixed-variant": "#543b71",
+              "outline-variant": "#5b403c",
+              "secondary-container": "#543b71",
+              "on-tertiary-fixed": "#241a0e",
+              "inverse-primary": "#bb1917",
+              "surface-container-low": "#1c1b1b",
+              "on-secondary-fixed": "#260e43",
+              "on-surface": "#e5e2e1",
+              "on-background": "#e5e2e1",
+              "surface-dim": "#131313",
+              "on-secondary": "#3c2559",
+              "error-container": "#93000a",
+              "surface-variant": "#353534",
+              "secondary-fixed": "#eedbff",
+              "primary-container": "#ff5447",
+              "on-tertiary": "#3a2e21",
+              "primary-fixed-dim": "#ffb4aa",
+              "tertiary-container": "#9f8e7c",
+              "on-primary-container": "#5c0002",
+              "inverse-on-surface": "#313030",
+              "on-error": "#690005"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-panel {
+        background: rgba(28, 27, 27, 0.4);
+        backdrop-filter: blur(20px);
+      }
+      ::-webkit-scrollbar { width: 4px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 10px; }
+      .custom-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 12px;
+        height: 12px;
+        background: #ffb4aa;
+        cursor: pointer;
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(255, 180, 170, 0.4);
+      }
+      .custom-slider {
+        -webkit-appearance: none;
+        height: 2px;
+        background: #353534;
+        outline: none;
+      }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary/30 overflow-hidden">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-zinc-900/40 backdrop-blur-xl shadow-[0_20px_40px_rgba(255,180,170,0.08)] flex justify-between items-center px-8 h-20 w-full">
+<div class="text-2xl font-bold tracking-tighter text-zinc-100 font-['Space_Grotesk']">
+            Atelier Visualizer
+        </div>
+<div class="hidden md:flex gap-10">
+<a class="font-['Space_Grotesk'] tracking-tight text-sm uppercase font-bold text-[#FFB4AA] border-b-2 border-[#FFB4AA] pb-1" href="#">Projects</a>
+<a class="font-['Space_Grotesk'] tracking-tight text-sm uppercase font-bold text-zinc-400 hover:text-zinc-100 transition-colors" href="#">Explore</a>
+<a class="font-['Space_Grotesk'] tracking-tight text-sm uppercase font-bold text-zinc-400 hover:text-zinc-100 transition-colors" href="#">Community</a>
+</div>
+<button class="bg-primary-container text-on-primary-container px-6 py-2.5 rounded-lg font-headline font-bold text-sm uppercase tracking-wider scale-95 active:scale-90 transition-transform hover:brightness-110">
+            Try for Free
+        </button>
+</nav>
+<div class="flex h-screen pt-20">
+<!-- Left Side Bar: Design Tools -->
+<aside class="fixed left-0 top-20 h-[calc(100vh-5rem)] w-64 z-40 bg-zinc-900/40 backdrop-blur-xl flex flex-col p-6 gap-8 overflow-y-auto">
+<div class="space-y-1">
+<h3 class="font-headline text-xs font-medium uppercase tracking-widest text-zinc-400">Design Tools</h3>
+<p class="font-headline text-lg font-bold text-[#D8BAFA] leading-tight">Palettes &amp; Presets</p>
+</div>
+<!-- Navigation States -->
+<div class="flex flex-col gap-2">
+<button class="flex items-center gap-4 p-3 text-[#D8BAFA] bg-zinc-800/60 rounded-lg transition-all duration-200 ease-in-out group">
+<span class="material-symbols-outlined" data-icon="palette">palette</span>
+<span class="font-headline text-xs font-medium uppercase tracking-widest">Palettes</span>
+</button>
+<button class="flex items-center gap-4 p-3 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/30 transition-all duration-200 ease-in-out group">
+<span class="material-symbols-outlined" data-icon="style">style</span>
+<span class="font-headline text-xs font-medium uppercase tracking-widest">Presets</span>
+</button>
+<button class="flex items-center gap-4 p-3 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/30 transition-all duration-200 ease-in-out group">
+<span class="material-symbols-outlined" data-icon="texture">texture</span>
+<span class="font-headline text-xs font-medium uppercase tracking-widest">Materials</span>
+</button>
+<button class="flex items-center gap-4 p-3 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/30 transition-all duration-200 ease-in-out group">
+<span class="material-symbols-outlined" data-icon="light_mode">light_mode</span>
+<span class="font-headline text-xs font-medium uppercase tracking-widest">Lighting</span>
+</button>
+</div>
+<!-- Color Swatches Section -->
+<div class="space-y-4 pt-4 border-t border-zinc-800/30">
+<label class="font-headline text-[10px] font-bold uppercase tracking-widest text-zinc-500">Active Accents</label>
+<div class="grid grid-cols-2 gap-3">
+<div class="h-16 rounded-xl bg-[#D8BAFA] flex items-end p-2 cursor-pointer hover:scale-105 transition-transform" title="Lavender">
+<span class="text-[8px] font-bold text-on-secondary uppercase tracking-tighter">Lavender</span>
+</div>
+<div class="h-16 rounded-xl bg-[#FFB4AA] flex items-end p-2 cursor-pointer hover:scale-105 transition-transform ring-2 ring-primary ring-offset-2 ring-offset-background" title="Coral">
+<span class="text-[8px] font-bold text-on-primary uppercase tracking-tighter">Coral</span>
+</div>
+<div class="h-16 rounded-xl bg-[#D7C3B0] flex items-end p-2 cursor-pointer hover:scale-105 transition-transform" title="Beige">
+<span class="text-[8px] font-bold text-on-tertiary uppercase tracking-tighter">Beige</span>
+</div>
+<div class="h-16 rounded-xl bg-[#353534] flex items-end p-2 cursor-pointer hover:scale-105 transition-transform border border-outline-variant/20" title="Charcoal">
+<span class="text-[8px] font-bold text-zinc-400 uppercase tracking-tighter">Charcoal</span>
+</div>
+</div>
+</div>
+<!-- Theme Presets -->
+<div class="space-y-3">
+<label class="font-headline text-[10px] font-bold uppercase tracking-widest text-zinc-500">Presets</label>
+<div class="flex flex-col gap-2">
+<button class="text-left py-2 px-1 border-b border-outline-variant/10 text-xs font-medium text-zinc-300 hover:text-primary transition-colors">BOHO MINIMAL</button>
+<button class="text-left py-2 px-1 border-b border-outline-variant/10 text-xs font-medium text-zinc-300 hover:text-primary transition-colors">LUXURY MODERN</button>
+<button class="text-left py-2 px-1 border-b border-outline-variant/10 text-xs font-medium text-zinc-300 hover:text-primary transition-colors">EARTHY NORDIC</button>
+<button class="text-left py-2 px-1 border-b border-outline-variant/10 text-xs font-medium text-zinc-300 hover:text-primary transition-colors">INDUSTRIAL LOFT</button>
+</div>
+</div>
+</aside>
+<!-- Main Content: 3D Viewport -->
+<main class="flex-1 ml-64 mr-80 relative p-8">
+<div class="w-full h-full rounded-2xl overflow-hidden relative group">
+<img class="w-full h-full object-cover" data-alt="Modern high-end living room interior with coral accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHI-LPoEiD9Pa8l1fCtNAk_Wn2WwuIBNmRTYp9U-3B5LXeezcW-RYtPB1r1BxAStkEW31tmQbFwiml50EckSaIooi-OO4JNxe58zXmrNTidX6kZDvKw25qScFQOHQOL47D9XetNgZr4BEmRdm1IOBvYBBp0ThIlOawE9QzV5o184VWlX5eiMIzIcM1Vd3GO6TJppbL_lecEhKDGK7P9IkIy5AXEgRwztg41zKFQIq9Fn8zx44lVIJzE6ih7S8xNXbnn4aDdElP8Q"/>
+<!-- Viewport Controls (Floating Glass) -->
+<div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-zinc-900/60 backdrop-blur-xl p-2 rounded-full border border-white/5">
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-zinc-300" data-icon="videocam">videocam</span>
+</button>
+<div class="w-px h-6 bg-white/10"></div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-zinc-300" data-icon="3d_rotation">3d_rotation</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center bg-primary text-on-primary shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined" data-icon="camera">camera</span>
+</button>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-zinc-300" data-icon="layers">layers</span>
+</button>
+<div class="w-px h-6 bg-white/10"></div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-zinc-300" data-icon="settings">settings</span>
+</button>
+</div>
+<!-- Scene Label -->
+<div class="absolute top-8 left-8">
+<div class="bg-black/40 backdrop-blur-md px-4 py-2 rounded-lg border border-white/10">
+<span class="font-headline text-[10px] font-bold uppercase tracking-widest text-primary">Live Preview</span>
+<h2 class="font-headline text-lg font-bold text-white">Stockholm Penthouse</h2>
+</div>
+</div>
+</div>
+</main>
+<!-- Right Side Panel: Customization -->
+<aside class="fixed right-0 top-20 h-[calc(100vh-5rem)] w-80 z-40 bg-zinc-950/40 backdrop-blur-xl border-l border-zinc-800/30 p-8 flex flex-col gap-10">
+<div class="space-y-1">
+<h3 class="font-headline text-xs font-medium uppercase tracking-widest text-zinc-400">Parameter Control</h3>
+<p class="font-headline text-xl font-bold text-zinc-100">Customization</p>
+</div>
+<!-- Toggles Section -->
+<div class="space-y-6">
+<label class="font-headline text-[10px] font-bold uppercase tracking-widest text-zinc-500">Surface Elements</label>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium text-zinc-300">Wall Textures</span>
+<div class="w-10 h-5 bg-primary/20 rounded-full relative cursor-pointer">
+<div class="absolute right-1 top-1 w-3 h-3 bg-primary rounded-full"></div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium text-zinc-300">Floor Mapping</span>
+<div class="w-10 h-5 bg-primary/20 rounded-full relative cursor-pointer">
+<div class="absolute right-1 top-1 w-3 h-3 bg-primary rounded-full"></div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium text-zinc-500">Furniture AO</span>
+<div class="w-10 h-5 bg-zinc-800 rounded-full relative cursor-pointer">
+<div class="absolute left-1 top-1 w-3 h-3 bg-zinc-600 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sliders Section -->
+<div class="space-y-8">
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<label class="font-headline text-[10px] font-bold uppercase tracking-widest text-zinc-500">Glossiness</label>
+<span class="font-headline text-xs font-bold text-primary">74%</span>
+</div>
+<input class="w-full custom-slider" type="range" value="74"/>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<label class="font-headline text-[10px] font-bold uppercase tracking-widest text-zinc-500">Reflectivity</label>
+<span class="font-headline text-xs font-bold text-primary">32%</span>
+</div>
+<input class="w-full custom-slider" type="range" value="32"/>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<label class="font-headline text-[10px] font-bold uppercase tracking-widest text-zinc-500">Light Intensity</label>
+<span class="font-headline text-xs font-bold text-primary">88%</span>
+</div>
+<input class="w-full custom-slider" type="range" value="88"/>
+</div>
+</div>
+<!-- Material Card -->
+<div class="mt-auto">
+<div class="bg-surface-container-high p-4 rounded-xl border border-outline-variant/10">
+<div class="flex gap-4 items-center mb-4">
+<div class="w-12 h-12 rounded-lg bg-tertiary-fixed-dim overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Wood texture sample" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCC6nk3MsKeymYsFp4DAI8231kTJsW5GIoj-U3nvS0jhvf6iItfgPES9tAsHSjqKmZLAl08FZR7SOGMhG-XJgyWb07s2HBu9dWP0cNLIOsiW1H6JzO36dRM8o5fYTo_nj59HYsoxOpglLJhYGvUSAEGe-lipAY3j91yWAFJl9HKVgZm_Mh4bfd_UICfGuT47z144m2y-qGhTBGQu1QZxJwGV7dpJhUCbkw45bS9N2VQq-0kL8ujrHNoUjcIvpEzRPo09ig9E81RbQ"/>
+</div>
+<div>
+<p class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Active Material</p>
+<p class="text-sm font-bold text-zinc-100">Oaked Nordic Birch</p>
+</div>
+</div>
+<button class="w-full py-2 bg-zinc-800 hover:bg-zinc-700 text-[10px] font-bold uppercase tracking-widest text-zinc-300 rounded-lg transition-colors">
+                        Change Material
+                    </button>
+</div>
+</div>
+</aside>
+</div>
+<!-- Background Subtle Glows -->
+<div class="fixed top-0 left-0 w-full h-full pointer-events-none -z-10">
+<div class="absolute top-1/4 -left-20 w-96 h-96 bg-primary/5 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-secondary/5 blur-[120px] rounded-full"></div>
+</div>
+<!-- Minimal Footer -->
+<footer class="fixed bottom-0 w-full bg-zinc-950 border-t border-zinc-800/50 py-4 px-8 z-50">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="text-sm text-zinc-500 font-['Manrope']">
+                © 2024 Atelier Visualizer. <span class="text-zinc-400">Digital Tonalism Excellence.</span>
+</div>
+<div class="flex gap-6">
+<a class="text-xs text-zinc-500 hover:text-[#D8BAFA] transition-colors" href="#">Privacy Policy</a>
+<a class="text-xs text-zinc-500 hover:text-[#D8BAFA] transition-colors" href="#">Terms of Service</a>
+<a class="text-xs text-zinc-500 hover:text-[#D8BAFA] transition-colors" href="#">Contact Us</a>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary": "#d7c3b0",
+              "background": "#131313",
+              "on-tertiary-fixed-variant": "#524436",
+              "surface-container-highest": "#353534",
+              "surface-container-high": "#2a2a2a",
+              "on-secondary-container": "#c6a9e7",
+              "on-primary-fixed-variant": "#930007",
+              "on-primary": "#690003",
+              "tertiary-fixed": "#f4dfcb",
+              "surface-bright": "#393939",
+              "inverse-surface": "#e5e2e1",
+              "on-tertiary-container": "#33281b",
+              "on-surface-variant": "#e4beb8",
+              "surface-container": "#201f1f",
+              "secondary": "#d8bafa",
+              "primary-fixed": "#ffdad5",
+              "primary": "#ffb4aa",
+              "tertiary-fixed-dim": "#d7c3b0",
+              "on-error-container": "#ffdad6",
+              "on-primary-fixed": "#410001",
+              "outline": "#ab8984",
+              "surface": "#131313",
+              "surface-tint": "#ffb4aa",
+              "secondary-fixed-dim": "#d8bafa",
+              "surface-container-lowest": "#0e0e0e",
+              "error": "#ffb4ab",
+              "on-secondary-fixed-variant": "#543b71",
+              "outline-variant": "#5b403c",
+              "secondary-container": "#543b71",
+              "on-tertiary-fixed": "#241a0e",
+              "inverse-primary": "#bb1917",
+              "surface-container-low": "#1c1b1b",
+              "on-secondary-fixed": "#260e43",
+              "on-surface": "#e5e2e1",
+              "on-background": "#e5e2e1",
+              "surface-dim": "#131313",
+              "on-secondary": "#3c2559",
+              "error-container": "#93000a",
+              "surface-variant": "#353534",
+              "secondary-fixed": "#eedbff",
+              "primary-container": "#ff5447",
+              "on-tertiary": "#3a2e21",
+              "primary-fixed-dim": "#ffb4aa",
+              "tertiary-container": "#9f8e7c",
+              "on-primary-container": "#5c0002",
+              "inverse-on-surface": "#313030",
+              "on-error": "#690005"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(28, 27, 27, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .text-glow {
+            text-shadow: 0 0 15px rgba(255, 180, 170, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-8 h-20 w-full bg-zinc-900/40 backdrop-blur-xl shadow-[0_20px_40px_rgba(255,180,170,0.08)]">
+<div class="text-2xl font-bold tracking-tighter text-zinc-100 font-['Space_Grotesk']">
+            Atelier Visualizer
+        </div>
+<div class="hidden md:flex items-center gap-10">
+<a class="font-['Space_Grotesk'] tracking-tight text-sm uppercase font-bold text-zinc-400 hover:text-zinc-100 transition-colors" href="#">Projects</a>
+<a class="font-['Space_Grotesk'] tracking-tight text-sm uppercase font-bold text-[#FFB4AA] border-b-2 border-[#FFB4AA] pb-1" href="#">Explore</a>
+<a class="font-['Space_Grotesk'] tracking-tight text-sm uppercase font-bold text-zinc-400 hover:text-zinc-100 transition-colors" href="#">Community</a>
+</div>
+<button class="bg-primary-container text-on-primary px-6 py-2 rounded-xl font-headline font-bold text-sm uppercase tracking-wider scale-95 active:scale-90 transition-transform hover:shadow-[0_0_15px_rgba(255,84,71,0.4)]">
+            Try for Free
+        </button>
+</nav>
+<!-- SideNavBar (Hidden on small, visible on large) -->
+<aside class="fixed left-0 top-20 h-[calc(100vh-5rem)] w-64 z-40 hidden lg:flex flex-col p-6 gap-8 bg-zinc-900/40 backdrop-blur-xl transition-all duration-200 ease-in-out">
+<div>
+<h3 class="font-['Space_Grotesk'] text-xs font-medium uppercase tracking-widest text-[#D8BAFA] mb-1">Design Tools</h3>
+<p class="text-[10px] text-zinc-500 font-headline uppercase tracking-tighter">Palettes &amp; Presets</p>
+</div>
+<div class="flex flex-col gap-4">
+<a class="flex items-center gap-4 p-3 text-[#D8BAFA] bg-zinc-800/60 rounded-lg group transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="palette">palette</span>
+<span class="font-['Space_Grotesk'] text-xs font-medium uppercase tracking-widest">Palettes</span>
+</a>
+<a class="flex items-center gap-4 p-3 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/30 rounded-lg group transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="style">style</span>
+<span class="font-['Space_Grotesk'] text-xs font-medium uppercase tracking-widest">Presets</span>
+</a>
+<a class="flex items-center gap-4 p-3 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/30 rounded-lg group transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="texture">texture</span>
+<span class="font-['Space_Grotesk'] text-xs font-medium uppercase tracking-widest">Materials</span>
+</a>
+<a class="flex items-center gap-4 p-3 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/30 rounded-lg group transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="light_mode">light_mode</span>
+<span class="font-['Space_Grotesk'] text-xs font-medium uppercase tracking-widest">Lighting</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="pt-20 lg:pl-64 min-h-screen">
+<!-- Hero Section: Featured Content -->
+<section class="relative h-[716px] w-full overflow-hidden flex items-end p-12">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-transparent z-10"></div>
+<img class="w-full h-full object-cover grayscale-[20%] brightness-75 transition-transform duration-700 hover:scale-105" data-alt="Luxurious dark modern living room with warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB822FM6l_NwR4Tj2Ch2LZMOfeCpI1x-vtyAGNWyJG8iyuEPJqCOMT70QuW2cESZwnq3T-HmB19ZcwS8qWcSfyYrqm-3VQllB2AI-u1t53iMX2YgGNd5OZWlLLRHKuKHiOfC6BQj9fHp0bF33K7slsWETJzk2ISAH3h4boOPgtzIfhvfU5IZzuq1LtEaxbEjBPMcaEgFfAT3IDOAV4wyoVuaiaIUrKd9ZoOJHHIyEa4RFzVp1CXJdW6duNUAjiQdEPrQuesHUmR-A"/>
+</div>
+<div class="relative z-20 max-w-4xl space-y-6">
+<span class="font-label text-primary text-sm uppercase tracking-[0.3em] font-bold">Featured Atmosphere</span>
+<h1 class="font-headline text-6xl md:text-8xl font-bold tracking-tighter leading-none text-zinc-100">
+                    SILENT <br/> <span class="text-secondary opacity-80">MINIMALISM</span>
+</h1>
+<p class="font-body text-lg text-tertiary-fixed-dim max-w-xl">
+                    Explore the intersection of brutalist architecture and soft tonalism. A curated collection of 45 high-fidelity material presets.
+                </p>
+<div class="flex gap-4 pt-4">
+<button class="bg-primary text-on-primary px-8 py-4 rounded-xl font-headline font-bold uppercase tracking-widest hover:brightness-110 transition-all">
+                        Open Collection
+                    </button>
+<button class="px-8 py-4 rounded-xl border border-outline-variant glass-panel font-headline font-bold uppercase tracking-widest text-zinc-100 hover:bg-zinc-800/50 transition-all">
+                        View Details
+                    </button>
+</div>
+</div>
+</section>
+<!-- Gallery Sections: Bento Grid for Moods -->
+<section class="p-12 space-y-20">
+<div class="flex flex-col gap-2">
+<div class="h-[1px] w-12 bg-primary mb-4"></div>
+<h2 class="font-headline text-4xl font-bold tracking-tight">CURATED MOODS</h2>
+<p class="font-body text-zinc-500">Selected environments by top architectural visualizers.</p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-6 h-auto md:h-[800px]">
+<!-- Large Feature Card -->
+<div class="md:col-span-3 md:row-span-2 group relative overflow-hidden rounded-xl bg-surface-container-low">
+<img class="w-full h-full object-cover opacity-60 group-hover:scale-105 group-hover:opacity-100 transition-all duration-500" data-alt="Modern kitchen with marble and oak accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpfuOnK0GwwDYEbHTo1fp5mVs3a7d-6pDyuStHFWDEmC6gdI8CvhSQmbrPZej12NxxJsjU7Tx4wF5p_eJSvQBNCoSWxLDjV_Q3YI3z3aFXNFTrHS2zc7_tRnWD2wIB-9zULyk21MxlKsiCutTndbMVfcYwUDeq1gU4n7U32Ad14-I38f8z2Yqkg51kKoxZ5WTJLAADw9V2GAsnnlBdqNNouvBFoE6FU5q8pnwLCq4ekIjv2QDF3IdfIUVg-XwRAG61G8-Wtc8PDQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent p-8 flex flex-col justify-end">
+<span class="font-label text-xs text-secondary uppercase tracking-widest mb-2">Preset 01</span>
+<h3 class="font-headline text-3xl font-bold mb-2">Nordic Dawn</h3>
+<p class="text-sm text-zinc-400 font-body max-w-sm">A soft, high-key lighting preset designed for Scandinavian interiors.</p>
+</div>
+</div>
+<!-- Vertical Card -->
+<div class="md:col-span-1 md:row-span-2 group relative overflow-hidden rounded-xl bg-surface-container-low">
+<img class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-500" data-alt="Minimalist bedroom with concrete walls" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcAbEeyZl4w2qfAIvlQOwgLThG30zMqLRVGtNhnz9eWsVhaDQcAc7C5GaMEksZtlnl9yNmEnAEQX4FAgF_OjxEKpzn1RCA1ltpYBWOjHOShmGJDOjL7j7NTgqvdLOsGU-r3VWaFKisLTlnMgqljHmmTyId5y9ZfOlDZkmFDLbfVGrkqNl1y2mtkHck3sAwGApB-TRiOiCYupZvZxgL-S7T5VJ8Koyv4wHrFDWwTdBZ0tUmtTlpCuFoVmQUqnq9LadGcrhKolX1VA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent p-6 flex flex-col justify-end">
+<h3 class="font-headline text-xl font-bold">Concrete Mist</h3>
+</div>
+</div>
+<!-- Square Card 1 -->
+<div class="md:col-span-2 md:row-span-1 group relative overflow-hidden rounded-xl bg-surface-container-low">
+<img class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-500" data-alt="Rustic modern study room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnDabC1RoDqNgAHG1-2oY5Pe5fCZlbC12452bgG4wzmV7FcDqHb_Ed4eSIrCE9JOC3hpVzP2eVhiDjptm61XadEyCb_7jdy4jbGroERtEmO6X64pIBTOXUxi0Uv6u-wm-IszdoOmaj0nOWAQ4JK3JEpmfSvZFThYSi-keapd_DXZKzI4g4MjoezttsBbYTEMiJH0cCXfgwLBPx2dKLFpNri8-dM5z02wPqT_-54CHkrIT_Hg6iMhq4lYbeMVMSCAcJadf5E2kxjQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent p-6 flex flex-col justify-end">
+<h3 class="font-headline text-xl font-bold">Cognac Study</h3>
+</div>
+</div>
+<!-- Square Card 2 -->
+<div class="md:col-span-2 md:row-span-1 group relative overflow-hidden rounded-xl bg-surface-container-low">
+<img class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-500" data-alt="Colorful mid-century modern living room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB40jOHcsr4IX6Lvf90b1CnKh5tKNWgENQNjYYGE5N1UP7duv-cSBmo1rAUfzD_dLbzvKTRMG7UTjAW7uJ8AgNPZYcXl6Q0PmInEwqWPVzNBUlMycxKlaLxt9c91oV7z10EEYQ85cUjqNsc4zXToBlnPORWZoUQToDqltpOv4gs0oI51XI_OBysCvq9cIVAzBIPRDmrBtUQEJXqkUcWODla62YJOeQiTSUIIoS5QeldcNrYkkwZLVaTUkxbYaEYf-65c7k7IJV6Vg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent p-6 flex flex-col justify-end">
+<h3 class="font-headline text-xl font-bold">Prism Loft</h3>
+</div>
+</div>
+</div>
+<!-- Material Library: Horizontal Scroll/Flex Section -->
+<div class="space-y-8 pt-10">
+<div class="flex justify-between items-end">
+<div>
+<h2 class="font-headline text-4xl font-bold tracking-tight">MATERIAL LIBRARIES</h2>
+<p class="font-body text-zinc-500">Ultra-HD textures with PBR mapping.</p>
+</div>
+<a class="text-primary font-headline text-sm uppercase tracking-widest font-bold border-b border-primary/30 hover:border-primary transition-all" href="#">View All Materials</a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
+<!-- Material Swatch 1 -->
+<div class="space-y-4 group">
+<div class="aspect-square rounded-xl overflow-hidden bg-surface-container-high transition-transform duration-300 group-hover:scale-[1.02] group-hover:shadow-[0_0_25px_rgba(216,186,250,0.15)]">
+<img class="w-full h-full object-cover brightness-90 group-hover:brightness-100" data-alt="White carrara marble texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjTNt1nF1dFG1Q3tiOL0MzJLV-YPXpFio1uKtm280xRP-JbVL0QVMJ24gG42ONl4SCBiAYEKeCHdF8oGtOABmj49UYoBdVidQBLZP2HLGECdTj4Y4eehBAsIymyEHEqNWUWeB4XzR3MNvU6j0G9KMU-Cl3mew0Wc0FFOl8iMchHrac9u_O4qvBfuV4pTH7dq7Pxgn5X5P6JWzpPA3WuynK-Wg9fIvn4RU5ingAYEW05xYEKJ22hV40Jmrzt8LJieU8jrM_o4O86g"/>
+</div>
+<div>
+<p class="font-label text-[10px] text-zinc-500 uppercase tracking-widest">Natural Stone</p>
+<h4 class="font-headline text-lg font-bold text-zinc-200">Carrara Silk</h4>
+</div>
+</div>
+<!-- Material Swatch 2 -->
+<div class="space-y-4 group">
+<div class="aspect-square rounded-xl overflow-hidden bg-surface-container-high transition-transform duration-300 group-hover:scale-[1.02] group-hover:shadow-[0_0_25px_rgba(255,180,170,0.15)]">
+<img class="w-full h-full object-cover brightness-75 group-hover:brightness-90" data-alt="Raw concrete wall texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq1Fexd6msYKEBUZxLNS-suMrRe4ls2ZmUG4xRviq3ZcVz3_7_wA891TgKBWF00vZ04Ls5tkIbx5_vryNLdLHVbcshJ1PZdhN5vQ6-YMkWv7Lvkipz6o7T0ne75T6_8WjYfyiuk3vwehNNBrBnry4B6M1evznBi3x5oosLUDbF1EqewAN1xUKCIKTgqpYjqkTqhpREIxl6LIVI4S02GF-kbLJgHuOFJKeWsS6dDaMK1uxPYMlvVhAHbyiZ1dbXxUa6JRK1fQyChg"/>
+</div>
+<div>
+<p class="font-label text-[10px] text-zinc-500 uppercase tracking-widest">Industrial</p>
+<h4 class="font-headline text-lg font-bold text-zinc-200">Raw Brutalist</h4>
+</div>
+</div>
+<!-- Material Swatch 3 -->
+<div class="space-y-4 group">
+<div class="aspect-square rounded-xl overflow-hidden bg-surface-container-high transition-transform duration-300 group-hover:scale-[1.02]">
+<img class="w-full h-full object-cover brightness-75 group-hover:brightness-90" data-alt="Dark walnut wood texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQNQwCs8Y67DPfv446L1x-GOON5A8JgDVsgh7AdSz4rPFJusH3KvOz8dRyboMtaxnTd1g1zGgEl-_2TtqrEZY0Z030-cMeNj4zRBMi4nHCcMldY8Iowde8fy899-a6rgxLnLXcpJTP1eFoNYv2PObBPcX8OW_qw_XdpZwlWm4tZNZzY-cXmk1xLvUS6FyvBBEOxZxxZir1_2EdGEMh-1qILa5UkXJR83SCtDgE-1Vg8PdMDlXFhWNyxyA3otMJjWC8GYfiPl5u4A"/>
+</div>
+<div>
+<p class="font-label text-[10px] text-zinc-500 uppercase tracking-widest">Timber</p>
+<h4 class="font-headline text-lg font-bold text-zinc-200">Smoked Walnut</h4>
+</div>
+</div>
+<!-- Material Swatch 4 -->
+<div class="space-y-4 group">
+<div class="aspect-square rounded-xl overflow-hidden bg-surface-container-high transition-transform duration-300 group-hover:scale-[1.02]">
+<img class="w-full h-full object-cover brightness-75 group-hover:brightness-90" data-alt="Brushed bronze metal texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPopD8ehxPFQVlF622CvlUCGgtrZFno04ntbzNG6Kw5aLNBpiXlIleBaRZNHGeGuqUch_YLoeMPuiFzZyhk8LdpmAMiuA-wALvrzjPlLAHA1hrXaaxVqwfQcUb1kJcjZRsvH6sjaQxP4Y42tV70hqmHwB6GytPQwzCOZgeAI0h6RFgH-_v4oNnw2eACXYEyhG3D4ttdT9_6SjgcWCAepTf_7qfXpt-jcPTG9f6SvFZ-J7zGvHvbLXmB4CX0I5SV2WbwX_enbzS7w"/>
+</div>
+<div>
+<p class="font-label text-[10px] text-zinc-500 uppercase tracking-widest">Metallics</p>
+<h4 class="font-headline text-lg font-bold text-zinc-200">Aged Bronze</h4>
+</div>
+</div>
+<!-- Material Swatch 5 -->
+<div class="space-y-4 group">
+<div class="aspect-square rounded-xl overflow-hidden bg-surface-container-high transition-transform duration-300 group-hover:scale-[1.02]">
+<img class="w-full h-full object-cover brightness-75 group-hover:brightness-90" data-alt="Modern geometric tile pattern" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsoBiq9C4HWLC4mMrlEfWGEg9l_xQXz3tV_ueDjssffHNhGAxxVaUwkKuxMQNE7k0zsL7C9QIwzsbff5N0T_P0aAywJ1hb_-ltq_b0_50XsucolnqqSmwK-wqs5rfFhcO2Ud56yZm19dmy5zV0jBBTVV2zq07h6QDOKyiXGRhXagNj1GK_-6hkbJNsjrS-bZ0TBGPcPFe42e_foImQDlBTEPud0ku-qh67XM1lcWU4Meb_G1HqpaB3x6ClV0NUJjjG73nHOv9Xyw"/>
+</div>
+<div>
+<p class="font-label text-[10px] text-zinc-500 uppercase tracking-widest">Tiles</p>
+<h4 class="font-headline text-lg font-bold text-zinc-200">Graphic Geo</h4>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Newsletter / Footer CTA -->
+<section class="mx-12 mb-12 p-16 rounded-3xl bg-surface-container-lowest border border-outline-variant/10 flex flex-col md:flex-row justify-between items-center gap-12 overflow-hidden relative">
+<div class="absolute top-0 right-0 w-96 h-96 bg-primary/5 blur-[120px] rounded-full -mr-48 -mt-48"></div>
+<div class="relative z-10 max-w-xl">
+<h2 class="font-headline text-5xl font-bold tracking-tighter mb-4">JOIN THE ATELIER.</h2>
+<p class="font-body text-zinc-400">Receive weekly curated moodboards and exclusive material presets from world-class designers.</p>
+</div>
+<div class="relative z-10 w-full max-w-md flex flex-col gap-4">
+<div class="flex flex-col gap-1">
+<input class="bg-surface-container-lowest border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 text-zinc-200 placeholder:text-zinc-600 font-body py-4" placeholder="email@architecture.com" type="email"/>
+</div>
+<button class="w-full py-4 bg-[#FF5447] text-[#690003] font-headline font-bold uppercase tracking-widest rounded-xl hover:shadow-[0_15px_30px_rgba(255,84,71,0.2)] transition-all">Subscribe</button>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full py-16 px-8 border-t border-zinc-800/50 bg-zinc-950">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 max-w-7xl mx-auto">
+<div class="space-y-6">
+<div class="text-lg font-bold text-zinc-100 font-['Space_Grotesk'] uppercase tracking-tighter">Atelier Visualizer</div>
+<p class="font-['Manrope'] text-sm text-zinc-400 leading-relaxed">
+                        Redefining spatial visualization through digital tonalism and ultra-fidelity rendering.
+                    </p>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-headline text-zinc-100 text-sm font-bold uppercase tracking-widest">Platform</h4>
+<a class="text-zinc-500 hover:text-[#D8BAFA] transition-colors text-sm font-body" href="#">Browse Moods</a>
+<a class="text-zinc-500 hover:text-[#D8BAFA] transition-colors text-sm font-body" href="#">Material Index</a>
+<a class="text-zinc-500 hover:text-[#D8BAFA] transition-colors text-sm font-body" href="#">Render Engine</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-headline text-zinc-100 text-sm font-bold uppercase tracking-widest">Resources</h4>
+<a class="text-zinc-500 hover:text-[#D8BAFA] transition-colors text-sm font-body" href="#">Privacy Policy</a>
+<a class="text-zinc-500 hover:text-[#D8BAFA] transition-colors text-sm font-body" href="#">Terms of Service</a>
+<a class="text-zinc-500 hover:text-[#D8BAFA] transition-colors text-sm font-body" href="#">Cookie Settings</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-headline text-zinc-100 text-sm font-bold uppercase tracking-widest">Community</h4>
+<a class="text-zinc-500 hover:text-[#D8BAFA] transition-colors text-sm font-body" href="#">Contact Us</a>
+<a class="text-zinc-500 hover:text-[#D8BAFA] transition-colors text-sm font-body" href="#">Instagram</a>
+<a class="text-zinc-500 hover:text-[#D8BAFA] transition-colors text-sm font-body" href="#">Twitter/X</a>
+</div>
+</div>
+<div class="mt-16 pt-8 border-t border-zinc-800/30 text-center">
+<p class="font-['Manrope'] text-xs text-zinc-600 uppercase tracking-[0.2em]">© 2024 Atelier Visualizer. Digital Tonalism Excellence.</p>
+</div>
+</footer>
+</main>
+<!-- Floating Action Button (FAB) - Contextual to Exploration -->
+<button class="fixed bottom-8 right-8 z-50 w-16 h-16 bg-primary rounded-full flex items-center justify-center text-on-primary shadow-[0_10px_30px_rgba(255,180,170,0.4)] hover:scale-110 active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">add</span>
+</button>
+</body></html>
