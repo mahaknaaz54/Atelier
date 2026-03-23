@@ -41,12 +41,6 @@ export default function SceneCanvas({ onScreenshot }: SceneCanvasProps) {
 
   return (
     <div className="w-full h-full relative">
-      {/* Scene label */}
-      <div className="absolute top-4 left-4 z-10 bg-black/40 backdrop-blur px-4 py-2 rounded-xl border border-white/10">
-        <div className="font-headline text-[10px] font-bold uppercase tracking-widest text-[#FFB4AA]">Live Preview</div>
-        <div className="font-headline text-base font-bold text-white">Studio Room</div>
-      </div>
-
       {/* Lighting mode badge */}
       <div className="absolute top-4 right-4 z-10 bg-black/40 backdrop-blur px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
         <div className={`w-2 h-2 rounded-full ${lightingMode === 'day' ? 'bg-yellow-400' : 'bg-blue-400'}`} />
@@ -77,29 +71,6 @@ export default function SceneCanvas({ onScreenshot }: SceneCanvasProps) {
           <Preload all />
         </Suspense>
       </Canvas>
-
-      {/* Bottom controls */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex items-center gap-3 bg-black/60 backdrop-blur-xl px-4 py-2 rounded-full border border-white/10">
-        <button
-          title="Screenshot"
-          onClick={takeScreenshot}
-          className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors text-[#c4c9ac] hover:text-[#FFB4AA]"
-        >
-          📸
-        </button>
-        <div className="w-px h-5 bg-white/10" />
-        <button title="Orbit" className="w-9 h-9 rounded-full flex items-center justify-center bg-[#FFB4AA]/10 text-[#FFB4AA] text-sm">
-          🔄
-        </button>
-        <div className="w-px h-5 bg-white/10" />
-        <button
-          title="Reset camera"
-          onClick={() => {}} 
-          className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors text-[#c4c9ac]"
-        >
-          🎯
-        </button>
-      </div>
     </div>
   );
 }

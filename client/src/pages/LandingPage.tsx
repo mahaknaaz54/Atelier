@@ -1,412 +1,379 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
-/* ─── Design Tokens ── */
-const PRIMARY       = '#FFB4AA';
-const PRIMARY_CTR   = '#FF5447';
-const ON_CTR        = '#5c0002';
-const SECONDARY     = '#D8BAFA';
-const SURFACE       = '#131313';
-const SURFACE_LOW   = '#1c1b1b';
-const SURFACE_HIGH  = '#2a2a2a';
-const SURFACE_HIGHEST = '#353534';
-const ON_SURFACE    = '#e5e2e1';
-const ZINC_400      = '#a1a1aa';
+/* ─── Tokens ── */
+const P   = '#FFB4AA'; // coral
+const CTR = '#FF5447'; // tomato red CTA
+const OC  = '#5c0002'; // on-cta text
+const SEC = '#D8BAFA'; // lavender
+const SUR = '#131313'; // base bg
+const S1  = '#1a1a1a'; // surface-low
+const S2  = '#222222'; // surface-high
+const T   = '#e5e2e1'; // on-surface text
+const Z   = '#71717a'; // zinc-500 muted
 
-/* ─── NavBar ─────────────────────────────────── */
-function NavBar() {
-  const [menuOpen, setMenuOpen] = useState(false);
-
+/* ─── Nav ── */
+function Nav() {
   return (
-    <>
-      <nav
-        className="fixed top-0 w-full z-50 flex justify-between items-center px-6 sm:px-8 h-20"
-        style={{
-          background: 'rgba(24,24,27,0.4)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
-          boxShadow: '0 20px 40px rgba(255,180,170,0.08)',
-        }}
-      >
-        {/* Logo */}
-        <div className="font-headline text-xl sm:text-2xl font-bold tracking-tighter" style={{ color: ON_SURFACE }}>
-          Atelier Visualizer
-        </div>
+    <nav style={{
+      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
+      height: 72,
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      padding: '0 48px',
+      background: 'rgba(19,19,19,0.7)',
+      backdropFilter: 'blur(20px)',
+      WebkitBackdropFilter: 'blur(20px)',
+      borderBottom: '1px solid rgba(255,255,255,0.05)',
+    }}>
+      <span style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 20, fontWeight: 700, color: T, letterSpacing: '-0.02em' }}>
+        Atelier Visualizer
+      </span>
 
-        {/* Desktop Nav links */}
-        <div className="hidden md:flex gap-10 items-center">
-          <a href="#"
-            className="font-headline tracking-tight text-sm uppercase font-bold transition-colors"
-            style={{ color: PRIMARY, borderBottom: `2px solid ${PRIMARY}`, paddingBottom: '4px' }}>
-            Projects
+      <div style={{ display: 'flex', gap: 36, alignItems: 'center' }}>
+        {['Projects', 'Explore'].map((l, i) => (
+          <a key={l} href={i === 1 ? '#explore' : '#'} style={{
+            fontFamily: 'Space Grotesk, sans-serif', fontSize: 12, fontWeight: 700,
+            textTransform: 'uppercase', letterSpacing: '0.08em', textDecoration: 'none',
+            color: i === 0 ? P : Z,
+            borderBottom: i === 0 ? `2px solid ${P}` : 'none',
+            paddingBottom: i === 0 ? 3 : 0,
+            transition: 'color 0.15s',
+          }}
+          onMouseEnter={e => { if (i !== 0) e.currentTarget.style.color = T; }}
+          onMouseLeave={e => { if (i !== 0) e.currentTarget.style.color = Z; }}>
+            {l}
           </a>
-          <a href="#explore"
-            className="font-headline tracking-tight text-sm uppercase font-bold transition-colors"
-            style={{ color: ZINC_400 }}
-            onMouseEnter={e => (e.currentTarget.style.color = ON_SURFACE)}
-            onMouseLeave={e => (e.currentTarget.style.color = ZINC_400)}>
-            Explore
-          </a>
-          <a href="#community"
-            className="font-headline tracking-tight text-sm uppercase font-bold transition-colors"
-            style={{ color: ZINC_400 }}
-            onMouseEnter={e => (e.currentTarget.style.color = ON_SURFACE)}
-            onMouseLeave={e => (e.currentTarget.style.color = ZINC_400)}>
-            Community
-          </a>
-        </div>
+        ))}
+      </div>
 
-        {/* Desktop CTA */}
-        <Link to="/auth"
-          className="hidden md:inline-flex font-headline font-bold text-sm uppercase tracking-wider px-6 py-2.5 rounded-xl transition-all active:scale-90 hover:brightness-110"
-          style={{ background: PRIMARY_CTR, color: ON_CTR, boxShadow: '0 0 20px rgba(255,84,71,0.25)' }}>
-          Try for Free
-        </Link>
-
-        {/* Mobile hamburger */}
-        <button
-          className="md:hidden flex flex-col gap-1.5 p-2"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
-        >
-          <motion.span
-            animate={{ rotate: menuOpen ? 45 : 0, y: menuOpen ? 8 : 0 }}
-            className="block w-6 h-0.5"
-            style={{ background: ON_SURFACE }}
-          />
-          <motion.span
-            animate={{ opacity: menuOpen ? 0 : 1 }}
-            className="block w-6 h-0.5"
-            style={{ background: ON_SURFACE }}
-          />
-          <motion.span
-            animate={{ rotate: menuOpen ? -45 : 0, y: menuOpen ? -8 : 0 }}
-            className="block w-6 h-0.5"
-            style={{ background: ON_SURFACE }}
-          />
-        </button>
-      </nav>
-
-      {/* Mobile drawer */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.25 }}
-            className="fixed top-20 left-0 right-0 z-40 flex flex-col gap-2 px-6 py-6 md:hidden"
-            style={{ background: 'rgba(18,18,22,0.97)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}
-          >
-            {['Projects', 'Explore', 'Community'].map(item => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                onClick={() => setMenuOpen(false)}
-                className="font-headline text-sm uppercase font-bold py-3 border-b transition-colors"
-                style={{ color: ZINC_400, borderColor: 'rgba(255,255,255,0.06)' }}
-                onMouseEnter={e => (e.currentTarget.style.color = ON_SURFACE)}
-                onMouseLeave={e => (e.currentTarget.style.color = ZINC_400)}
-              >
-                {item}
-              </a>
-            ))}
-            <Link
-              to="/auth"
-              onClick={() => setMenuOpen(false)}
-              className="mt-3 text-center font-headline font-bold text-sm uppercase tracking-wider px-6 py-3 rounded-xl transition-all"
-              style={{ background: PRIMARY_CTR, color: ON_CTR }}
-            >
-              Try for Free
-            </Link>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+      <Link to="/auth" style={{
+        fontFamily: 'Space Grotesk, sans-serif', fontSize: 12, fontWeight: 700,
+        textTransform: 'uppercase', letterSpacing: '0.1em', textDecoration: 'none',
+        background: CTR, color: OC, padding: '10px 24px', borderRadius: 10,
+        boxShadow: '0 0 24px rgba(255,84,71,0.2)',
+        transition: 'filter 0.15s',
+      }}
+      onMouseEnter={e => e.currentTarget.style.filter = 'brightness(1.1)'}
+      onMouseLeave={e => e.currentTarget.style.filter = 'brightness(1)'}>
+        Try for Free
+      </Link>
+    </nav>
   );
 }
 
-/* ─── LandingPage ──────────────────────────────── */
-export default function LandingPage() {
+/* ─── Hero ── */
+function Hero() {
   return (
-    <div className="min-h-screen overflow-x-hidden" style={{ background: SURFACE, color: ON_SURFACE, fontFamily: 'Manrope, sans-serif' }}>
-      <NavBar />
+    <section style={{
+      minHeight: '100vh', paddingTop: 72, display: 'flex', alignItems: 'center',
+      background: SUR, position: 'relative', overflow: 'hidden',
+    }}>
+      {/* Subtle radial glow */}
+      <div style={{
+        position: 'absolute', top: '20%', left: '5%', width: 600, height: 600,
+        background: `radial-gradient(circle, ${P}12 0%, transparent 70%)`,
+        pointerEvents: 'none',
+      }} />
+      <div style={{
+        position: 'absolute', top: '30%', right: '10%', width: 400, height: 400,
+        background: `radial-gradient(circle, ${SEC}0e 0%, transparent 70%)`,
+        pointerEvents: 'none',
+      }} />
 
-      {/* ── Hero ──────────────────────────────────────────── */}
-      <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
-        {/* Background image with tonal overlay */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfhQEE_JVJa-v5Ub2WyeC9Kol6wPTgxjH4JVL9zy0kC_H-JnyI8Fblo_VBWWjvYmaD7j9foIcUr2XBCZQyVeDmj_hFHUtpCp4VOO8AA0Hh_iNv8_iyWSowrvDIscNdJetKJsJmYg_Kg5emOiC_CmTqfKBwEb3qMCYPfMn2am0FLyQypSIY9srijrhwh4lWjYVQ9dvBW2xO6SFufKW0M_0uuHt63QdcyYCEKwQ0dswFDy5sdahan9gMrPFd5RvF9Gaj7SLLSlOFgw"
-            alt="Luxurious modern interior"
-            className="w-full h-full object-cover"
-            style={{ opacity: 0.6, filter: 'grayscale(30%)' }}
-          />
-          <div className="absolute inset-0" style={{ background: `linear-gradient(to right, ${SURFACE} 0%, ${SURFACE}cc 40%, transparent 100%)` }} />
-          <div className="absolute inset-0" style={{ background: `linear-gradient(to top, ${SURFACE} 0%, transparent 50%)` }} />
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 48px', display: 'flex', flexDirection: 'column', gap: 32 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <span style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: P, display: 'block', marginBottom: 24 }}>
+            The Future of Spatial Design
+          </span>
+          <h1 style={{
+            fontFamily: 'Space Grotesk, sans-serif', fontWeight: 800,
+            fontSize: 'clamp(56px, 8vw, 96px)', lineHeight: 0.92,
+            letterSpacing: '-0.03em', margin: 0, color: T,
+          }}>
+            DIGITAL<br />
+            <span style={{ color: P }}>TONALISM.</span>
+          </h1>
+        </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          style={{
+            fontFamily: 'Manrope, sans-serif', fontSize: 18, lineHeight: 1.7,
+            color: Z, maxWidth: 560, margin: 0,
+          }}
+        >
+          An exploration of light, space, and emotion. Curate atmospheres,
+          visualize luxury, and express your architectural vision with uncompromising aesthetic purity.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
+          style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}
+        >
+          <Link to="/auth" style={{
+            fontFamily: 'Space Grotesk, sans-serif', fontSize: 13, fontWeight: 700,
+            textTransform: 'uppercase', letterSpacing: '0.1em', textDecoration: 'none',
+            background: CTR, color: OC, padding: '14px 36px', borderRadius: 12,
+            boxShadow: '0 8px 32px rgba(255,84,71,0.2)', transition: 'all 0.2s',
+          }}>
+            Enter Studio
+          </Link>
+          <a href="#explore" style={{
+            fontFamily: 'Space Grotesk, sans-serif', fontSize: 13, fontWeight: 700,
+            textTransform: 'uppercase', letterSpacing: '0.1em', textDecoration: 'none',
+            background: 'rgba(255,255,255,0.05)', color: T,
+            border: '1px solid rgba(255,255,255,0.1)',
+            padding: '14px 36px', borderRadius: 12, transition: 'all 0.2s',
+          }}
+          onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.09)'}
+          onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}>
+            View The Vision
+          </a>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Showreel Animation ── */
+function ShowreelAnimation() {
+  return (
+    <div style={{
+      position: 'absolute', inset: 0, zIndex: 0,
+      background: '#111', overflow: 'hidden'
+    }}>
+      {/* Dynamic Background simulating the 'room' color changing */}
+      <motion.div
+        animate={{
+          background: [
+            'radial-gradient(circle at 50% 50%, #FFB4AA40 0%, #111 70%)', // Coral
+            'radial-gradient(circle at 50% 50%, #D8BAFA40 0%, #111 70%)', // Lavender
+            'radial-gradient(circle at 50% 50%, #D7C3B040 0%, #111 70%)', // Beige
+            'radial-gradient(circle at 50% 50%, #FFB4AA40 0%, #111 70%)', // Back to Coral
+          ]
+        }}
+        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+        style={{ position: 'absolute', inset: 0 }}
+      />
+      
+      {/* Mock UI Panel */}
+      <div style={{
+        position: 'absolute', right: 40, top: '50%', transform: 'translateY(-50%)',
+        width: 140, background: 'rgba(24,24,27,0.6)', backdropFilter: 'blur(12px)',
+        border: '1px solid rgba(255,255,255,0.1)', borderRadius: 16, padding: 16,
+        display: 'flex', flexDirection: 'column', gap: 12, boxShadow: '0 20px 40px rgba(0,0,0,0.5)'
+      }}>
+        <div style={{ width: '100%', height: 6, background: 'rgba(255,255,255,0.1)', borderRadius: 3 }} />
+        <div style={{ width: '60%', height: 6, background: 'rgba(255,255,255,0.1)', borderRadius: 3, marginBottom: 8 }} />
+        
+        {/* Color Swatches */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+          <div style={{ aspectRatio: '1', borderRadius: 8, background: '#FFB4AA' }} />
+          <div style={{ aspectRatio: '1', borderRadius: 8, background: '#D8BAFA' }} />
+          <div style={{ aspectRatio: '1', borderRadius: 8, background: '#D7C3B0' }} />
+          <div style={{ aspectRatio: '1', borderRadius: 8, background: '#444' }} />
+        </div>
+      </div>
+
+      {/* Animated Cursor */}
+      <motion.div
+        animate={{
+          x: [20, 260, 260, 310, 310, 260, 260, 20], // X path connecting the swatches
+          y: [20, 160, 160, 160, 160, 205, 205, 20], // Y path
+          scale: [1, 1, 0.8, 1, 0.8, 1, 0.8, 1], // Click effect
+        }}
+        transition={{ duration: 6, repeat: Infinity, times: [0, 0.15, 0.2, 0.4, 0.45, 0.65, 0.7, 1], ease: 'easeInOut' }}
+        style={{
+          position: 'absolute', left: 0, top: 0, width: 20, height: 20,
+          filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.3))'
+        }}
+      >
+        {/* SVG Cursor Pointer */}
+        <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 2l12 11.2-5.8.5 3.3 7.3-2.2 1-3.2-7.4-4.4 4.5V2z" stroke="#000" strokeWidth="1" strokeLinejoin="round" />
+        </svg>
+      </motion.div>
+    </div>
+  );
+}
+
+/* ─── Vision / Explore ── */
+function ExploreVision() {
+  return (
+    <section id="explore" style={{ background: S1, padding: '120px 0' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 48px' }}>
+        <div style={{ marginBottom: 80, textAlign: 'center' }}>
+          <p style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: P, marginBottom: 16 }}>
+            The Philosophy
+          </p>
+          <h2 style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: 700, letterSpacing: '-0.03em', color: T, margin: 0, lineHeight: 1.1 }}>
+            Design Without Compromise.
+          </h2>
+          <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: 18, color: Z, margin: '24px auto 0', maxWidth: 600, lineHeight: 1.7 }}>
+            Atelier was born from a singular obsession: the absolute mastery of digital mood.
+            It's not just software; it's a profound appreciation for the intersection of automotive sleakness, high-end architecture, and cinematic lighting.
+          </p>
         </div>
 
-        <div className="container mx-auto px-6 sm:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* Left: headline + CTAs */}
-          <motion.div
-            className="lg:col-span-7 flex flex-col py-12 lg:py-0"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <span className="font-headline text-xs sm:text-sm uppercase tracking-[0.3em] font-bold mb-4 sm:mb-6 block" style={{ color: PRIMARY }}>
-              The Future of Spatial Design
-            </span>
-            <h1 className="font-headline font-bold tracking-tighter leading-none mb-6 sm:mb-8"
-              style={{ fontSize: 'clamp(3rem, 9vw, 7rem)', lineHeight: 0.9, color: ON_SURFACE }}>
-              DIGITAL <br />
-              <span style={{ color: PRIMARY }}>TONALISM.</span>
-            </h1>
-            <p className="font-body text-base sm:text-lg max-w-xl mb-8 sm:mb-12 leading-relaxed" style={{ color: ZINC_400 }}>
-              Experience hyper-realistic interior color visualization. Our AI-driven engine renders light and texture
-              with architectural precision, allowing you to curate atmospheres with a single click.
-            </p>
-            <div className="flex flex-wrap gap-4 sm:gap-6">
-              <Link to="/auth"
-                className="font-headline font-bold uppercase tracking-widest px-8 sm:px-10 py-3.5 sm:py-4 rounded-xl transition-all hover:brightness-110 active:scale-95"
-                style={{ background: PRIMARY_CTR, color: ON_CTR, boxShadow: '0 20px 40px rgba(255,84,71,0.15)' }}>
-                Try for Free
-              </Link>
-              <a href="#explore"
-                className="font-headline font-bold uppercase tracking-widest px-8 sm:px-10 py-3.5 sm:py-4 rounded-xl transition-all hover:bg-white/10"
-                style={{ border: `1px solid ${SURFACE_HIGHEST}`, background: 'rgba(255,255,255,0.05)', color: ON_SURFACE }}>
-                Explore Designs
-              </a>
+        {/* Vision Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 24, marginBottom: 24 }}>
+          {/* Main Cinematic Video Block */}
+          <div style={{ 
+            background: '#0a0a0a', borderRadius: 24, border: '1px solid rgba(255,255,255,0.08)',
+            position: 'relative', overflow: 'hidden', minHeight: 480, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 40
+          }}>
+            <ShowreelAnimation />
+            
+            <div style={{ position: 'relative', zIndex: 10 }}>
+              <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(255,180,170,0.1)', border: `1px solid ${P}40`, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 24, backdropFilter: 'blur(10px)' }}>
+                <span className="material-symbols-outlined" style={{ color: P, fontSize: 24, marginLeft: 2 }}>play_arrow</span>
+              </div>
+              <h3 style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 28, fontWeight: 700, color: T, margin: '0 0 12px', letterSpacing: '-0.01em' }}>
+                The Atelier Cinematic Showreel
+              </h3>
+              <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: 15, color: '#a1a1aa', margin: 0, maxWidth: 400, lineHeight: 1.6 }}>
+                Experience our design language in motion. Curvilinear forms, raw concrete texturing, and automotive-grade clear coat reflections.
+              </p>
             </div>
-          </motion.div>
-
-          {/* Right: floating preset card — hidden on mobile / tablet */}
-          <motion.div
-            className="hidden lg:flex lg:col-span-5 items-center justify-end"
-            initial={{ opacity: 0, x: 40, y: 20 }}
-            animate={{ opacity: 1, x: 0, y: 48 }}
-            transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <div className="p-8 rounded-xl w-80"
-              style={{ background: 'rgba(28,27,27,0.4)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 20px 40px rgba(255,180,170,0.08)' }}>
-              <div className="flex justify-between items-center mb-6">
-                <span className="font-headline text-xs font-bold uppercase tracking-widest" style={{ color: ZINC_400 }}>Active Preset</span>
-                <span className="material-symbols-outlined" style={{ color: PRIMARY }}>auto_awesome</span>
-              </div>
-              <h3 className="font-headline text-xl font-bold mb-2" style={{ color: ON_SURFACE }}>Nordic Dusk</h3>
-              <p className="font-body text-sm mb-6" style={{ color: ZINC_400 }}>Muted lavenders and deep charcoals for high-end serenity.</p>
-              <div className="flex gap-3 mb-8">
-                {[SURFACE_HIGHEST, '#543b71', PRIMARY].map((c, i) => (
-                  <div key={i} className="w-10 h-10 rounded-full"
-                    style={{ background: c, boxShadow: i === 2 ? `0 0 15px ${PRIMARY}` : undefined }} />
-                ))}
-              </div>
-              <div className="h-1 w-full rounded-full overflow-hidden" style={{ background: '#3a3a3a' }}>
-                <div className="h-full rounded-full" style={{ background: PRIMARY, width: '66%' }} />
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── Feature Bento Grid ────────────────────────────── */}
-      <section id="explore" className="py-20 sm:py-32" style={{ background: SURFACE_LOW }}>
-        <div className="container mx-auto px-6 sm:px-8">
-          <div className="mb-12 sm:mb-20 max-w-2xl">
-            <h2 className="font-headline text-3xl sm:text-4xl font-bold tracking-tight mb-4 sm:mb-6" style={{ color: ON_SURFACE }}>
-              Engineered for Creative Precision.
-            </h2>
-            <p className="font-body text-base sm:text-lg" style={{ color: ZINC_400 }}>
-              Beyond a simple renderer. Atelier is an ecosystem where light meets logic.
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {/* Large card — AI Material Sync */}
-            <div className="sm:col-span-2 p-8 sm:p-12 rounded-2xl relative overflow-hidden group"
-              style={{ background: SURFACE_HIGH }}>
-              <div className="relative z-10 max-w-md">
-                <h3 className="font-headline text-2xl sm:text-3xl font-bold mb-4" style={{ color: ON_SURFACE }}>AI-Assisted Material Sync</h3>
-                <p className="font-body mb-6 sm:mb-8" style={{ color: ZINC_400 }}>
-                  Our neural network analyzes your room's natural lighting and automatically suggests material finishes that maintain the designer's intent.
-                </p>
-                <Link to="/auth" className="font-headline text-xs font-bold uppercase tracking-widest flex items-center gap-2 transition-colors" style={{ color: PRIMARY }}>
-                  Discover Engine <span className="material-symbols-outlined" style={{ fontSize: 16 }}>arrow_forward</span>
-                </Link>
-              </div>
-              <img
-                className="absolute top-0 right-0 w-1/2 h-full object-cover opacity-20 grayscale group-hover:opacity-40 transition-opacity"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTJjnGD-iGSVQrSOqrkaxx9RaEzvK8G500mkkytzlKPk-8RWUXbiFdo_TrArDs6bxz3N32bncRr43dqxYzWoFeQ2mNS4zuqu3AW8UizNUAwmDMznIrARseeXgjT2PP8ciyVYYrDVOsH-XniV-CFJs4VHwI107sKC5WQQGHif9C6YUWrhI-rOBJ9Hyn9KttHBCD1bilWcN1vzsyNLuo5K5-w2hhHH9aJ1K69BZG5IfsQ9NGM9oAjeOpYIjhyWP9whMTWx7vOgZnoQ"
-                alt="Fabric textures"
-              />
+          {/* Typography / Focus Card */}
+          <div style={{ 
+            background: S2, borderRadius: 24, border: '1px solid rgba(255,255,255,0.04)',
+            padding: 40, display: 'flex', flexDirection: 'column', gap: 24
+          }}>
+            <div style={{ flex: 1 }}>
+              <span className="material-symbols-outlined" style={{ fontSize: 32, color: SEC, marginBottom: 24 }}>auto_fix</span>
+              <h3 style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 22, fontWeight: 700, color: T, margin: '0 0 12px' }}>
+                Obsessive Materiality
+              </h3>
+              <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: 15, color: Z, margin: 0, lineHeight: 1.6 }}>
+                We believe that every pixel should exude quality. From the brushed titanium UI components to the deeply saturated blacks of our canvas. No fluff, no artificial metrics. Just pure visual fidelity.
+              </p>
             </div>
-
-            {/* Card 2 — Ultra-HD Library */}
-            <div className="p-8 sm:p-12 rounded-2xl hover:-translate-y-2 transition-all duration-300"
-              style={{ background: SURFACE_HIGH, borderBottom: `4px solid ${SECONDARY}` }}>
-              <span className="material-symbols-outlined mb-4 sm:mb-6 block" style={{ fontSize: 36, color: SECONDARY }}>texture</span>
-              <h3 className="font-headline text-xl sm:text-2xl font-bold mb-4" style={{ color: ON_SURFACE }}>Ultra-HD Library</h3>
-              <p className="font-body" style={{ color: ZINC_400 }}>8K texture maps with full PBR properties for realistic interaction with scene lighting.</p>
-            </div>
-
-            {/* Card 3 — Ray-Traced Precision */}
-            <div className="p-8 sm:p-12 rounded-2xl hover:-translate-y-2 transition-all duration-300"
-              style={{ background: SURFACE_HIGH, borderBottom: `4px solid ${PRIMARY_CTR}` }}>
-              <span className="material-symbols-outlined mb-4 sm:mb-6 block" style={{ fontSize: 36, color: PRIMARY }}>light_mode</span>
-              <h3 className="font-headline text-xl sm:text-2xl font-bold mb-4" style={{ color: ON_SURFACE }}>Ray-Traced Precision</h3>
-              <p className="font-body" style={{ color: ZINC_400 }}>Real-time path tracing for global illumination that mirrors physical reality perfectly.</p>
-            </div>
-
-            {/* Large card 2 — Cloud Compute Rendering */}
-            <div className="sm:col-span-2 rounded-2xl relative overflow-hidden flex flex-col justify-end min-h-[300px] sm:min-h-[400px]"
-              style={{ background: '#0d0d0d' }}>
-              <div className="absolute inset-0">
-                <img
-                  className="w-full h-full object-cover opacity-30"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYG-hu2oRgHV2u3MUsqUNITYNfGZp8sSqaSCmzAMXqYodnp_zx_k_EzakCZSum0w37s1DP21OCs0oB7I3R7z3O8y6b2I6JT7H6tLTVzYZ6hh2lDhC-kwN-0DxH-8ke0jvu75iRUWxoeLaw8sh3p8MFsTJkkPyVSHd-KEm-4QPEqO7-1TZDZKAGR_2DpYUJHL91ag4oaMCb080I0ZjINPEt4IaXumOrJaJ9qxSm9mp9mbAyLFB2eA_vq6RWeouaQjpTZevaRwezKQ"
-                  alt="Dark bedroom"
-                />
-                <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, #0d0d0d 20%, transparent)' }} />
-              </div>
-              <div className="relative z-10 p-8 sm:p-12">
-                <h3 className="font-headline text-2xl sm:text-3xl font-bold mb-4" style={{ color: ON_SURFACE }}>Cloud Compute Rendering</h3>
-                <p className="font-body max-w-lg" style={{ color: ZINC_400 }}>Finish complex 4K animations in minutes, not hours, using our distributed GPU network.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Pro-Grade Tools ───────────────────────────────── */}
-      <section className="py-20 sm:py-32" style={{ background: SURFACE }}>
-        <div className="container mx-auto px-6 sm:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <div style={{ height: 1, background: 'rgba(255,255,255,0.05)' }} />
             <div>
-              <h2 className="font-headline text-4xl sm:text-5xl font-bold tracking-tight mb-8 sm:mb-10 leading-tight" style={{ color: ON_SURFACE }}>
-                Pro-Grade Tools for <br />
-                <span style={{ color: SECONDARY }}>Visionary Designers.</span>
-              </h2>
-              <div className="space-y-8 sm:space-y-12">
-                {[
-                  { icon: 'palette', title: 'Adaptive Palettes', desc: 'Create color schemes that intelligently react to room volume and window placement.', color: PRIMARY },
-                  { icon: 'style', title: 'Preset Ecosystem', desc: 'Access thousands of pre-curated designer themes or build your own proprietary library.', color: SECONDARY },
-                ].map(({ icon, title, desc, color }) => (
-                  <div key={title} className="flex gap-4 sm:gap-6">
-                    <div className="flex-shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded flex items-center justify-center" style={{ background: SURFACE_HIGH }}>
-                      <span className="material-symbols-outlined" style={{ color }}>{icon}</span>
-                    </div>
-                    <div>
-                      <h4 className="font-headline text-lg sm:text-xl font-bold mb-2" style={{ color: ON_SURFACE }}>{title}</h4>
-                      <p className="font-body text-sm sm:text-base" style={{ color: ZINC_400 }}>{desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Simulated interface */}
-            <div className="relative mt-4 lg:mt-0">
-              <div className="rounded-2xl p-4 shadow-2xl overflow-hidden"
-                style={{ background: '#0e0e0e', border: '1px solid rgba(255,255,255,0.05)', boxShadow: '0 20px 40px rgba(255,180,170,0.08)' }}>
-                <div className="flex items-center gap-2 mb-4 px-2">
-                  <div className="w-3 h-3 rounded-full" style={{ background: '#ff5f57' }} />
-                  <div className="w-3 h-3 rounded-full" style={{ background: '#3a3a3a' }} />
-                  <div className="w-3 h-3 rounded-full" style={{ background: '#3a3a3a' }} />
-                  <span className="ml-auto font-headline" style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.15em', color: '#555' }}>Renderer v4.2 Stable</span>
-                </div>
-                <img
-                  className="w-full aspect-video object-cover rounded-lg mb-6"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_bTt-6nd-VDQwi2Wgv6609Cx67nFLvSJpDPqi--qPAyjA0eQ_IcDQ2S5h0LBiM0OZYen0RAlL3VtkVbEA8oegdSVhOhltkAX5Et6BLoVZgGdVBVSZ75Za9kz6el4Tf9zf59MrBZ_bZKhmWbwMjfPhQJNzH86UvMGzRr7Kq3jQ1sDAeQydvNFAHfsiYBaQMArEj0IJ9j0MwWY9Ur446hJrOHPF7nBnGMToaf9d1pBd0xmqOdT7liqKv-yH5eBGo5XxSi0zUwfxmA"
-                  alt="Renderer interface"
-                />
-                <div className="grid grid-cols-4 gap-3 sm:gap-4 p-2">
-                  {[
-                    { icon: 'layers', active: true },
-                    { icon: 'blur_on', active: false },
-                    { icon: 'view_in_ar', active: false },
-                    { icon: 'play_arrow', active: true, cta: true },
-                  ].map(({ icon, active, cta }, i) => (
-                    <div key={i} className="h-14 sm:h-16 rounded-lg flex items-center justify-center"
-                      style={{ background: cta ? PRIMARY_CTR : SURFACE_HIGH, border: active && !cta ? `1px solid ${PRIMARY}40` : undefined }}>
-                      <span className="material-symbols-outlined" style={{ color: cta ? ON_CTR : active ? PRIMARY : '#555' }}>{icon}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <span style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.15em', color: P, display: 'block', marginBottom: 8 }}>
+                The Inspiration
+              </span>
+              <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: 13, color: Z, margin: 0, lineHeight: 1.5 }}>
+                Bridging the gap between mid-century warmth and relentless futuristic precision.
+              </p>
             </div>
           </div>
         </div>
-      </section>
 
-      {/* ── CTA ───────────────────────────────────────────── */}
-      <section className="py-24 sm:py-40" style={{ background: SURFACE }}>
-        <div className="container mx-auto px-6 sm:px-8">
-          <div className="p-8 sm:p-16 lg:p-24 rounded-2xl sm:rounded-3xl relative overflow-hidden text-center"
-            style={{ background: `linear-gradient(135deg, ${SURFACE_HIGH} 0%, ${SURFACE_LOW} 100%)`, border: '1px solid rgba(255,255,255,0.05)' }}>
-            <div className="absolute top-0 left-0 w-full h-px" style={{ background: `linear-gradient(to right, transparent, ${PRIMARY}80, transparent)` }} />
-            <h2 className="font-headline font-bold mb-6 sm:mb-8 max-w-3xl mx-auto leading-tight"
-              style={{ fontSize: 'clamp(1.8rem, 5vw, 3.75rem)', color: ON_SURFACE }}>
-              Elevate your visualization workflow today.
-            </h2>
-            <p className="font-body text-base sm:text-lg mb-8 sm:mb-12 max-w-xl mx-auto" style={{ color: ZINC_400 }}>
-              Join over 15,000 architectural studios pushing the boundaries of tonal spatial design.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center">
-              <Link to="/auth"
-                className="w-full sm:w-auto font-headline font-bold uppercase tracking-widest px-10 sm:px-12 py-4 sm:py-5 rounded-xl transition-all hover:scale-105 hover:brightness-110 text-center"
-                style={{ background: PRIMARY_CTR, color: ON_CTR, boxShadow: '0 20px 40px rgba(255,84,71,0.2)' }}>
-                Create Free Project
-              </Link>
-              <a href="#"
-                className="w-full sm:w-auto font-headline font-bold uppercase tracking-widest px-10 sm:px-12 py-4 sm:py-5 rounded-xl transition-all hover:bg-white/10 text-center"
-                style={{ background: 'rgba(255,255,255,0.05)', border: `1px solid ${SURFACE_HIGHEST}`, color: ON_SURFACE }}>
-                Book a Demo
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Footer ────────────────────────────────────────── */}
-      <footer className="py-12 sm:py-16 px-6 sm:px-8" style={{ background: '#0a0a0a', borderTop: `1px solid ${SURFACE_HIGH}60` }}>
-        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12">
-          <div className="sm:col-span-2 lg:col-span-1">
-            <div className="font-headline text-lg font-bold mb-4 sm:mb-6" style={{ color: ON_SURFACE }}>Atelier Visualizer</div>
-            <p className="font-body text-sm leading-relaxed" style={{ color: ZINC_400 }}>
-              Defining the next era of high-end architectural rendering through digital tonalism and neural lighting.
-            </p>
-          </div>
+        {/* Second Row of Cards */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 24 }}>
           {[
-            { title: 'Navigation', links: ['Home', 'Projects', 'Explore', 'Community'] },
-            { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Cookie Settings'] },
-            { title: 'Connect', links: ['Twitter / X', 'Instagram', 'Contact Us'] },
-          ].map(({ title, links }) => (
-            <div key={title}>
-              <h5 className="font-headline text-xs font-bold uppercase tracking-widest mb-4 sm:mb-6" style={{ color: ON_SURFACE }}>{title}</h5>
-              <ul className="space-y-3 sm:space-y-4">
-                {links.map(link => (
-                  <li key={link}>
-                    <a href="#" className="font-body text-sm transition-colors"
-                      style={{ color: ZINC_400 }}
-                      onMouseEnter={e => (e.currentTarget.style.color = SECONDARY)}
-                      onMouseLeave={e => (e.currentTarget.style.color = ZINC_400)}>
-                      {link}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+            { title: 'The Silhouette', desc: 'Sleek, aerodynamic inspiration drawn directly from classic grand tourers.', icon: 'directions_car' },
+            { title: 'The Light', desc: 'Crafting volumetric perfection, treating light itself as a physical, sculptable material.', icon: 'tungsten' },
+            { title: 'The Purity', desc: 'A rejection of cluttered software. An interface that fades away, leaving only your art.', icon: 'lens_blur' }
+          ].map((card, i) => (
+            <div key={i} style={{ background: S2, borderRadius: 20, padding: 32, border: '1px solid rgba(255,255,255,0.04)' }}>
+              <span className="material-symbols-outlined" style={{ fontSize: 24, color: i === 0 ? P : i === 1 ? SEC : Z, marginBottom: 16 }}>{card.icon}</span>
+              <h4 style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 18, fontWeight: 700, color: T, margin: '0 0 12px' }}>{card.title}</h4>
+              <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: 14, color: Z, margin: 0, lineHeight: 1.6 }}>{card.desc}</p>
             </div>
           ))}
         </div>
-        <div className="max-w-7xl mx-auto mt-12 sm:mt-16 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6"
-          style={{ borderTop: `1px solid ${SURFACE_HIGH}50` }}>
-          <p className="font-body text-sm" style={{ color: ZINC_400 }}>© 2024 Atelier Visualizer. Digital Tonalism Excellence.</p>
-          <span className="font-headline uppercase" style={{ fontSize: 10, color: PRIMARY, letterSpacing: '0.2em' }}>
-            Stable Release 2.4.1
-          </span>
+
+      </div>
+    </section>
+  );
+}
+
+/* ─── CTA ── */
+function CTA() {
+  return (
+    <section style={{ background: SUR, padding: '120px 0' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 48px' }}>
+        <div style={{
+          background: S2, border: '1px solid rgba(255,255,255,0.06)', borderRadius: 24,
+          padding: '80px 64px', textAlign: 'center', position: 'relative', overflow: 'hidden',
+          boxShadow: '0 40px 100px rgba(0,0,0,0.5)'
+        }}>
+          <div style={{ position: 'absolute', top: 0, left: '10%', right: '10%', height: 1, background: `linear-gradient(to right, transparent, ${P}60, transparent)` }} />
+          <h2 style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, letterSpacing: '-0.02em', color: T, margin: '0 0 20px', lineHeight: 1.15 }}>
+            Ready to shape the atmosphere?
+          </h2>
+          <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: 16, lineHeight: 1.7, color: Z, margin: '0 auto 48px', maxWidth: 520 }}>
+            Join the movement of visionary designers building the spaces of tomorrow.
+          </p>
+          <div style={{ display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link to="/auth" style={{
+              fontFamily: 'Space Grotesk, sans-serif', fontSize: 13, fontWeight: 700,
+              textTransform: 'uppercase', letterSpacing: '0.1em', textDecoration: 'none',
+              background: CTR, color: OC, padding: '16px 40px', borderRadius: 12,
+              boxShadow: '0 8px 32px rgba(255,84,71,0.2)', transition: 'all 0.2s',
+            }}>
+              Enter The Sandbox
+            </Link>
+          </div>
         </div>
-      </footer>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Footer ── */
+function Footer() {
+  const cols = [
+    { title: 'Navigation', links: ['Home', 'Projects', 'Explore'] },
+    { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Cookie Settings'] },
+    { title: 'Connect', links: ['Twitter / X', 'Instagram', 'Contact Us'] },
+  ];
+  return (
+    <footer style={{ background: '#0a0a0a', borderTop: '1px solid rgba(255,255,255,0.05)', padding: '64px 0 32px' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 48px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 48, marginBottom: 48 }}>
+          <div>
+            <span style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 18, fontWeight: 700, color: T, letterSpacing: '-0.02em', display: 'block', marginBottom: 16 }}>Atelier Visualizer</span>
+            <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: 14, lineHeight: 1.7, color: Z, margin: 0, maxWidth: 280 }}>
+              Defining the next era of high-end architectural rendering through digital tonalism.
+            </p>
+          </div>
+          {cols.map(({ title, links }) => (
+            <div key={title}>
+              <span style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: T, display: 'block', marginBottom: 20 }}>{title}</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                {links.map(l => (
+                  <a key={l} href="#" style={{ fontFamily: 'Manrope, sans-serif', fontSize: 14, color: Z, textDecoration: 'none', transition: 'color 0.15s' }}
+                    onMouseEnter={e => e.currentTarget.style.color = SEC}
+                    onMouseLeave={e => e.currentTarget.style.color = Z}>
+                    {l}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: 13, color: Z, margin: 0 }}>Atelier Visualizer. Digital Tonalism Excellence.</p>
+          <span style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.2em', color: P }}>v2.4.1</span>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* ─── Page ── */
+export default function LandingPage() {
+  return (
+    <div style={{ background: SUR, color: T, fontFamily: 'Manrope, sans-serif', minHeight: '100vh' }}>
+      <Nav />
+      <Hero />
+      <ExploreVision />
+      <CTA />
+      <Footer />
     </div>
   );
 }

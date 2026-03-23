@@ -1,8 +1,9 @@
 import { create } from 'zustand';
 
 export type LightingMode = 'day' | 'night' | 'golden';
-export type ActiveSurface = 'wall' | 'floor' | 'ceiling' | 'accent';
+export type ActiveSurface = 'backWall' | 'leftWall' | 'rightWall' | 'floor' | 'ceiling';
 export type ActiveMaterial = 'matte' | 'glossy' | 'metallic' | 'concrete';
+export type FloorMaterial = 'french_oak' | 'brazilian_walnut' | 'italian_terrazzo' | 'polished_concrete' | 'moroccan_tile';
 export type PaletteMood = 'calm' | 'cozy' | 'luxury' | 'fresh' | 'bold';
 
 export interface SceneSnapshot {
@@ -12,10 +13,14 @@ export interface SceneSnapshot {
   accentColor: string;
   lightingMode: LightingMode;
   activeMaterial: ActiveMaterial;
+  floorMaterial: FloorMaterial;
+  leftWallColor: string;
+  rightWallColor: string;
   glossiness: number;
   reflectivity: number;
   lightIntensity: number;
   showFurniture: boolean;
+  furnitureAO: boolean;
   showAccentWall: boolean;
 }
 
@@ -168,6 +173,8 @@ export interface SceneState extends SceneSnapshot {
   activeSurface: ActiveSurface;
 
   setWallColor:     (c: string) => void;
+  setLeftWallColor: (c: string) => void;
+  setRightWallColor:(c: string) => void;
   setFloorColor:    (c: string) => void;
   setCeilingColor:  (c: string) => void;
   setAccentColor:   (c: string) => void;
@@ -175,10 +182,12 @@ export interface SceneState extends SceneSnapshot {
   setSurfaceColor:  (c: string) => void;
   setLightingMode:  (m: LightingMode) => void;
   setActiveMaterial:(m: ActiveMaterial) => void;
+  setFloorMaterial: (m: FloorMaterial) => void;
   setGlossiness:    (v: number) => void;
   setReflectivity:  (v: number) => void;
   setLightIntensity:(v: number) => void;
   toggleFurniture:  () => void;
+  toggleFurnitureAO:() => void;
   toggleAccentWall: () => void;
   applyPreset:      (p: Preset) => void;
   getSceneSnapshot: () => SceneSnapshot;
@@ -187,20 +196,26 @@ export interface SceneState extends SceneSnapshot {
 
 export const useSceneStore = create<SceneState>((set, get) => ({
   wallColor:      '#e8e4dc',
+  leftWallColor:  '#e8e4dc',
+  rightWallColor: '#e8e4dc',
   floorColor:     '#8a7560',
   ceilingColor:   '#f0ece4',
   accentColor:    '#FFB4AA',
   lightingMode:   'day',
   activeMaterial: 'matte',
+  floorMaterial:  'french_oak',
   glossiness:     30,
   reflectivity:   20,
   lightIntensity: 50,
   showFurniture:  true,
+  furnitureAO:    false,
   showAccentWall: false,
   activePreset:   null,
-  activeSurface:  'wall',
+  activeSurface:  'backWall',
 
-  setWallColor:    (c) => set({ wallColor: c, activePreset: null }),
+  setWallColor:    (c) => set({ wallColor: c, leftWallColor: c, rightWallColor: c, activePreset: null }),
+  setLeftWallColor:(c) => set({ leftWallColor: c, activePreset: null }),
+  setRightWallColor:(c) => set({ rightWallColor: c, activePreset: null }),
   setFloorColor:   (c) => set({ floorColor: c, activePreset: null }),
   setCeilingColor: (c) => set({ ceilingColor: c, activePreset: null }),
   setAccentColor:  (c) => set({ accentColor: c, activePreset: null }),
@@ -208,27 +223,43 @@ export const useSceneStore = create<SceneState>((set, get) => ({
 
   setSurfaceColor: (c) => {
     const s = get().activeSurface;
-    if (s === 'wall')    set({ wallColor: c, activePreset: null });
-    if (s === 'floor')   set({ floorColor: c, activePreset: null });
-    if (s === 'ceiling') set({ ceilingColor: c, activePreset: null });
-    if (s === 'accent')  set({ accentColor: c, activePreset: null });
+    if (s === 'backWall')  set({ wallColor: c, activePreset: null });
+    if (s === 'leftWall')  set({ leftWallColor: c, activePreset: null });
+    if (s === 'rightWall') set({ rightWallColor: c, activePreset: null });
+    if (s === 'floor')     set({ floorColor: c, activePreset: null });
+    if (s === 'ceiling')   set({ ceilingColor: c, activePreset: null });
   },
 
   setLightingMode:  (m) => set({ lightingMode: m }),
   setActiveMaterial:(m) => set({ activeMaterial: m }),
+  setFloorMaterial: (m) => {
+    set({ floorMaterial: m, activePreset: null });
+    // Also set a representative default color for the newly selected flooring material
+    get().setFloorColor(
+      m === 'french_oak' ? '#b08d6a' :
+      m === 'brazilian_walnut' ? '#4a2f1d' :
+      m === 'italian_terrazzo' ? '#e8e5df' :
+      m === 'polished_concrete' ? '#919191' :
+      '#3d6e63' // moroccan_tile
+    );
+  },
   setGlossiness:    (v) => set({ glossiness: v }),
   setReflectivity:  (v) => set({ reflectivity: v }),
   setLightIntensity:(v) => set({ lightIntensity: v }),
   toggleFurniture:  ()  => set((s) => ({ showFurniture: !s.showFurniture })),
+  toggleFurnitureAO:()  => set((s) => ({ furnitureAO: !s.furnitureAO })),
   toggleAccentWall: ()  => set((s) => ({ showAccentWall: !s.showAccentWall })),
 
   applyPreset: (p) => set({
     wallColor:      p.wallColor,
+    leftWallColor:  p.wallColor,
+    rightWallColor: p.wallColor,
     floorColor:     p.floorColor,
     ceilingColor:   p.ceilingColor,
     accentColor:    p.accentColor,
     lightingMode:   p.lightingMode,
     activeMaterial: p.activeMaterial,
+    floorMaterial:  'french_oak', // default for presets, or add to preset if needed
     activePreset:   p.name,
   }),
 
@@ -236,15 +267,19 @@ export const useSceneStore = create<SceneState>((set, get) => ({
     const s = get();
     return {
       wallColor:      s.wallColor,
+      leftWallColor:  s.leftWallColor,
+      rightWallColor: s.rightWallColor,
       floorColor:     s.floorColor,
       ceilingColor:   s.ceilingColor,
       accentColor:    s.accentColor,
       lightingMode:   s.lightingMode,
       activeMaterial: s.activeMaterial,
+      floorMaterial:  s.floorMaterial,
       glossiness:     s.glossiness,
       reflectivity:   s.reflectivity,
       lightIntensity: s.lightIntensity,
       showFurniture:  s.showFurniture,
+      furnitureAO:    s.furnitureAO,
       showAccentWall: s.showAccentWall,
     };
   },

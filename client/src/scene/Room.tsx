@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useSceneStore } from '../store/sceneStore';
 import { MeshStandardMaterial, Color } from 'three';
 import { useFrame } from '@react-three/fiber';
+import { ContactShadows } from '@react-three/drei';
 
 // Individual mesh that reactively lerps color
 function ColorMesh({
@@ -100,34 +101,51 @@ function FloorLamp({ visible }: { visible: boolean }) {
 
 export default function Room() {
   const wallColor = useSceneStore((s) => s.wallColor);
+  const leftWallColor = useSceneStore((s) => s.leftWallColor);
+  const rightWallColor = useSceneStore((s) => s.rightWallColor);
   const floorColor = useSceneStore((s) => s.floorColor);
   const ceilingColor = useSceneStore((s) => s.ceilingColor);
   const furnitureVisible = useSceneStore((s) => s.showFurniture);
+  const furnitureAO = useSceneStore((s) => s.furnitureAO);
   const glossiness = useSceneStore((s) => s.glossiness);
   const reflectivity = useSceneStore((s) => s.reflectivity);
+  const floorMaterial = useSceneStore((s) => s.floorMaterial);
 
-  // glossiness and reflectivity are stored as 0–100 (matching slider scale)
+  // global glossiness and reflectivity are stored as 0–100 (matching slider scale)
   const roughness = 1 - glossiness / 100;
   const metalness = reflectivity / 200;
+  
+  let floorRoughness = roughness;
+  let floorMetalness = metalness;
+  if (floorMaterial === 'french_oak') { floorRoughness = 0.7; floorMetalness = 0.05; }
+  else if (floorMaterial === 'brazilian_walnut') { floorRoughness = 0.6; floorMetalness = 0.08; }
+  else if (floorMaterial === 'italian_terrazzo') { floorRoughness = 0.3; floorMetalness = 0.1; }
+  else if (floorMaterial === 'polished_concrete') { floorRoughness = 0.15; floorMetalness = 0.3; }
+  else if (floorMaterial === 'moroccan_tile') { floorRoughness = 0.1; floorMetalness = 0.05; }
+
   const W = 8, H = 5, D = 8;
 
   return (
     <group>
       {/* Floor */}
-      <ColorMesh color={floorColor} position={[0, -H/2, 0]} rotation={[-Math.PI/2, 0, 0]} args={[W, D]} receiveShadow roughness={roughness} metalness={metalness} />
+      <ColorMesh color={floorColor} position={[0, -H/2, 0]} rotation={[-Math.PI/2, 0, 0]} args={[W, D]} receiveShadow roughness={floorRoughness} metalness={floorMetalness} />
       {/* Ceiling */}
       <ColorMesh color={ceilingColor} position={[0, H/2, 0]} rotation={[Math.PI/2, 0, 0]} args={[W, D]} roughness={0.95} />
       {/* Back wall */}
       <ColorMesh color={wallColor} position={[0, 0, -D/2]} args={[W, H]} receiveShadow roughness={roughness} metalness={metalness} />
       {/* Left wall */}
-      <ColorMesh color={wallColor} position={[-W/2, 0, 0]} rotation={[0, Math.PI/2, 0]} args={[D, H]} receiveShadow roughness={roughness} metalness={metalness} />
+      <ColorMesh color={leftWallColor} position={[-W/2, 0, 0]} rotation={[0, Math.PI/2, 0]} args={[D, H]} receiveShadow roughness={roughness} metalness={metalness} />
       {/* Right wall */}
-      <ColorMesh color={wallColor} position={[W/2, 0, 0]} rotation={[0, -Math.PI/2, 0]} args={[D, H]} receiveShadow roughness={roughness} metalness={metalness} />
+      <ColorMesh color={rightWallColor} position={[W/2, 0, 0]} rotation={[0, -Math.PI/2, 0]} args={[D, H]} receiveShadow roughness={roughness} metalness={metalness} />
 
       {/* Furniture */}
       <Sofa visible={furnitureVisible} />
       <CoffeeTable visible={furnitureVisible} />
       <FloorLamp visible={furnitureVisible} />
+
+      {furnitureVisible && furnitureAO && (
+        <ContactShadows position={[0, -H/2 + 0.01, 0]} opacity={0.65} scale={10} blur={2.5} far={4} color="#1f1d33" />
+      )}
 
       {/* Decorative wall panel */}
       {furnitureVisible && (

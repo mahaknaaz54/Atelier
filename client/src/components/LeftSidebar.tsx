@@ -41,6 +41,7 @@ export default function LeftSidebar() {
     floorColor, setFloorColor,
     ceilingColor, setCeilingColor,
     activeMaterial, setActiveMaterial,
+    setGlossiness, setReflectivity,
   } = useSceneStore();
 
   const filteredPresets = activeMood === 'all' ? PRESETS : PRESETS.filter(p => p.mood === activeMood);
@@ -297,7 +298,13 @@ export default function LeftSidebar() {
                 const active = activeMaterial === m.id as typeof activeMaterial;
                 return (
                   <button key={m.id}
-                    onClick={() => setActiveMaterial(m.id as typeof activeMaterial)}
+                    onClick={() => {
+                      setActiveMaterial(m.id as typeof activeMaterial);
+                      if (m.id === 'matte') { setGlossiness(10); setReflectivity(0); }
+                      if (m.id === 'glossy') { setGlossiness(90); setReflectivity(10); }
+                      if (m.id === 'metallic') { setGlossiness(70); setReflectivity(100); }
+                      if (m.id === 'concrete') { setGlossiness(20); setReflectivity(5); }
+                    }}
                     style={{
                       padding: '14px 10px', borderRadius: 10,
                       background: active ? `${SECONDARY}14` : 'rgba(255,255,255,0.03)',

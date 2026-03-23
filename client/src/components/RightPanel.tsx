@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useSceneStore, type LightingMode } from '../store/sceneStore';
+import { HexColorPicker } from 'react-colorful';
 
 /* ─── Design palette tokens ─ */
 const PRIMARY      = '#FFB4AA';
@@ -70,9 +71,11 @@ export default function RightPanel() {
     reflectivity, setReflectivity,
     lightIntensity, setLightIntensity,
     showFurniture, toggleFurniture,
-    showAccentWall, toggleAccentWall,
+    furnitureAO, toggleFurnitureAO,
     lightingMode, setLightingMode,
-    activeMaterial, wallColor, floorColor, ceilingColor,
+    wallColor, leftWallColor, rightWallColor, floorColor, ceilingColor,
+    activeSurface, setActiveSurface, setSurfaceColor,
+    floorMaterial, setFloorMaterial,
   } = useSceneStore();
 
   return (
@@ -105,9 +108,8 @@ export default function RightPanel() {
           <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: ZINC_500, marginBottom: 2, fontFamily: 'Space Grotesk, sans-serif' }}>
             Surface Elements
           </p>
-          <Toggle id="toggle-textures"  label="Wall Textures"  checked={showFurniture}  onChange={toggleFurniture}   />
-          <Toggle id="toggle-floor"     label="Floor Mapping"  checked={showAccentWall} onChange={toggleAccentWall}  />
-          <Toggle id="toggle-furniture" label="Furniture AO"   checked={false}           onChange={() => {}}          />
+          <Toggle id="toggle-furniture" label="Show Furniture" checked={showFurniture} onChange={toggleFurniture}   />
+          <Toggle id="toggle-ao"        label="Furniture AO"   checked={furnitureAO}   onChange={toggleFurnitureAO} />
         </section>
 
         {/* Sliders */}
@@ -137,32 +139,70 @@ export default function RightPanel() {
           </div>
         </section>
 
-        {/* Active Material card – bottom */}
+        {/* Global Flooring Options */}
+        <section style={{ padding: '28px 32px', borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexDirection: 'column', gap: 14 }}>
+          <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: ZINC_500, fontFamily: 'Space Grotesk, sans-serif' }}>
+            Global Flooring
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+            {[
+              { id: 'french_oak', label: 'French Oak', emoji: '🪵' },
+              { id: 'italian_terrazzo', label: 'Italian Terrazzo', emoji: '✨' },
+              { id: 'brazilian_walnut', label: 'Brazilian Walnut', emoji: '🌳' },
+              { id: 'polished_concrete', label: 'Polished Concrete', emoji: '🏢' },
+              { id: 'moroccan_tile', label: 'Moroccan Tile', emoji: '💠' },
+            ].map((m) => (
+              <button key={m.id} onClick={() => setFloorMaterial(m.id as any)}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 8, padding: '10px 12px',
+                  borderRadius: 10, cursor: 'pointer', border: 'none', textAlign: 'left',
+                  transition: 'all 0.2s', outline: floorMaterial === m.id ? `1px solid ${PRIMARY}50` : 'none',
+                  background: floorMaterial === m.id ? `${PRIMARY}18` : SURFACE_HIGH,
+                  gridColumn: m.id === 'moroccan_tile' ? '1 / -1' : 'auto', // last one spans full
+                }}
+              >
+                <span style={{ fontSize: 16 }}>{m.emoji}</span>
+                <span style={{ fontFamily: 'Manrope, sans-serif', fontSize: 11, fontWeight: 600, color: floorMaterial === m.id ? PRIMARY : ZINC_400 }}>{m.label}</span>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {/* Custom Color picker */}
         <section style={{ marginTop: 'auto', padding: '0 20px 20px' }}>
-          <div style={{ borderRadius: 12, padding: '16px 16px 0', background: SURFACE_HIGH, border: '1px solid rgba(255,255,255,0.06)' }}>
-            <div style={{ display: 'flex', gap: 16, alignItems: 'center', marginBottom: 16 }}>
-              {/* Wood texture swatch */}
-              <div style={{ width: 48, height: 48, borderRadius: 8, overflow: 'hidden', background: 'linear-gradient(135deg, #c9a87a, #8b6240)', flexShrink: 0 }} />
-              <div>
-                <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: ZINC_500, fontFamily: 'Space Grotesk, sans-serif', marginBottom: 4 }}>
-                  Active Material
-                </p>
-                <p style={{ fontSize: 14, fontWeight: 700, color: ZINC_100, fontFamily: 'Space Grotesk, sans-serif' }}>
-                  {activeMaterial.charAt(0).toUpperCase() + activeMaterial.slice(1)} Finish
-                </p>
+          <div style={{ borderRadius: 12, padding: '16px', background: SURFACE_HIGH, border: '1px solid rgba(255,255,255,0.06)' }}>
+            <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: ZINC_500, fontFamily: 'Space Grotesk, sans-serif', marginBottom: 12 }}>
+              Custom Color
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              <select
+                value={activeSurface}
+                onChange={(e) => setActiveSurface(e.target.value as any)}
+                style={{
+                  width: '100%', padding: '10px 12px', borderRadius: 8,
+                  background: SURFACE_LOW, border: '1px solid rgba(255,255,255,0.08)',
+                  color: ZINC_100, fontFamily: 'Space Grotesk, sans-serif', fontSize: 12, fontWeight: 600, outline: 'none', cursor: 'pointer'
+                }}
+              >
+                <option value="backWall">Back Wall</option>
+                <option value="leftWall">Left Wall</option>
+                <option value="rightWall">Right Wall</option>
+                <option value="floor">Floor</option>
+                <option value="ceiling">Ceiling</option>
+              </select>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <HexColorPicker
+                  color={
+                    activeSurface === 'backWall' ? wallColor :
+                    activeSurface === 'leftWall' ? leftWallColor :
+                    activeSurface === 'rightWall' ? rightWallColor :
+                    activeSurface === 'floor' ? floorColor : ceilingColor
+                  }
+                  onChange={setSurfaceColor}
+                  style={{ width: '100%', height: 140 }}
+                />
               </div>
             </div>
-            {/* Color summary mini */}
-            <div style={{ display: 'flex', gap: 4, marginBottom: 14 }}>
-              {[wallColor, floorColor, ceilingColor].map((c, i) => (
-                <div key={i} style={{ flex: 1, height: 4, borderRadius: 9999, background: c }} title={c} />
-              ))}
-            </div>
-            <button style={{ width: 'calc(100% + 32px)', padding: '10px', background: SURFACE_LOW, border: 'none', borderRadius: '0 0 8px 8px', cursor: 'pointer', fontFamily: 'Space Grotesk, sans-serif', fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: ZINC_400, transition: 'background 0.2s', marginLeft: '-16px' }}
-              onMouseEnter={e => (e.currentTarget.style.background = '#292929')}
-              onMouseLeave={e => (e.currentTarget.style.background = SURFACE_LOW)}>
-              Change Material
-            </button>
           </div>
         </section>
 

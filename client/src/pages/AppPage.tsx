@@ -93,11 +93,7 @@ function TopBar({
           onMouseLeave={e => (e.currentTarget.style.color = ZINC_400)}>
           Explore
         </a>
-        <a href="#" style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: ZINC_400, textDecoration: 'none' }}
-          onMouseEnter={e => (e.currentTarget.style.color = ZINC_100)}
-          onMouseLeave={e => (e.currentTarget.style.color = ZINC_400)}>
-          Community
-        </a>
+
       </nav>
 
       {/* Right actions */}
@@ -166,38 +162,31 @@ function TopBar({
 
 // ── Viewport Controls (floating bottom bar) ─────────────────
 function ViewportControls() {
+  const handleScreenshot = () => {
+    const fn = (window as Window & { atelierScreenshot?: () => void }).atelierScreenshot;
+    if (fn) fn();
+  };
+
   return (
     <div style={{
       position: 'absolute', bottom: 24, left: '50%', transform: 'translateX(-50%)',
       display: 'flex', alignItems: 'center', gap: 12,
       background: 'rgba(24,24,27,0.6)', backdropFilter: 'blur(20px)',
-      padding: '6px 8px', borderRadius: 9999, border: '1px solid rgba(255,255,255,0.05)',
+      padding: '8px 16px', borderRadius: 9999, border: '1px solid rgba(255,255,255,0.05)',
+      boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
     }}>
-      {[
-        { icon: 'videocam', active: false },
-        { icon: 'divider', active: false },
-        { icon: '3d_rotation', active: false },
-        { icon: 'photo_camera', active: true, primary: true },
-        { icon: 'layers', active: false },
-        { icon: 'divider2', active: false },
-        { icon: 'settings', active: false },
-      ].map((item, i) => {
-        if (item.icon.startsWith('divider')) {
-          return <div key={i} style={{ width: 1, height: 20, background: 'rgba(255,255,255,0.1)' }} />;
-        }
-        return (
-          <button key={i}
-            style={{
-              width: 36, height: 36, borderRadius: '50%', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s',
-              background: item.primary ? PRIMARY : 'transparent',
-              boxShadow: item.primary ? `0 0 15px ${PRIMARY}4d` : undefined,
-            }}
-            onMouseEnter={e => { if (!item.primary) (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.1)'; }}
-            onMouseLeave={e => { if (!item.primary) (e.currentTarget as HTMLButtonElement).style.background = 'transparent'; }}>
-            <span className="material-symbols-outlined" style={{ fontSize: 16, color: item.primary ? ON_CTR : ZINC_400 }}>{item.icon}</span>
-          </button>
-        );
-      })}
+      <button
+        title="Capture Screenshot"
+        onClick={handleScreenshot}
+        style={{
+          width: 44, height: 44, borderRadius: '50%', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s',
+          background: PRIMARY,
+          boxShadow: `0 0 16px ${PRIMARY}4d`,
+        }}
+        onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.filter = 'brightness(1.1)'; (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1.05)'; }}
+        onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.filter = 'brightness(1)'; (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1)'; }}>
+        <span className="material-symbols-outlined" style={{ fontSize: 20, color: ON_CTR }}>photo_camera</span>
+      </button>
     </div>
   );
 }
