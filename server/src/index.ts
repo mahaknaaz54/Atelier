@@ -36,22 +36,26 @@ app.use((_req, res) => {
 
 // Connect to MongoDB then start server
 // Connect to MongoDB
-mongoose
-  .connect(MONGODB_URI)
-  .then(() => {
-    console.log('✅ Connected to MongoDB');
-    // Only listen if not running in a serverless environment like Vercel
-    if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
-      app.listen(PORT, () => {
-        console.log(`🚀 Atelier API running on http://localhost:${PORT}`);
-      });
-    }
-  })
-  .catch((err) => {
-    console.error('❌ MongoDB connection error:', err.message);
-    if (process.env.NODE_ENV !== 'production') {
-      process.exit(1);
-    }
+const connectDB = async () => {
+  if (mongoose.connection.readyState >= 1) return;
+  return mongoose.connect(MONGODB_URI);
+};
+
+// Ensure DB is connected before handling API requests
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    console.error('❌ MongoDB connection error:', error);
+    res.status(500).json({ message: 'Database connection failed' });
+  }
+});
+
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+  connectDB().then(() => {
+    app.listen(PORT, () => console.log(`🚀 Atelier API running on http://localhost:${PORT}`));
   });
+}
 
 export default app;
