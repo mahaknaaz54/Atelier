@@ -14,26 +14,6 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/atelier';
 
-// Middleware
-app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173', credentials: true }));
-app.use(morgan('dev'));
-app.use(express.json({ limit: '10mb' }));
-
-// Routes
-app.use('/api/auth', authRouter);
-app.use('/api/projects', projectsRouter);
-app.use('/api/palettes', palettesRouter);
-
-// Health check
-app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
-});
-
-// 404 handler
-app.use((_req, res) => {
-  res.status(404).json({ message: 'Route not found' });
-});
-
 // Serverless MongoDB Connection (Global Cache)
 declare global {
   var mongoose: any;
@@ -47,6 +27,8 @@ const connectDB = async () => {
   if (cached.conn) return cached.conn;
   if (!cached.promise) {
     const opts = { bufferCommands: false, serverSelectionTimeoutMS: 5000 };
+    // Log for debugging (don't log full URI)
+    console.log(`Connecting to MongoDB... URI Starts with: ${MONGODB_URI.substring(0, 15)}...`);
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
       console.log('✅ Connected to MongoDB');
       return mongoose;
@@ -61,6 +43,11 @@ const connectDB = async () => {
   return cached.conn;
 };
 
+// Middleware
+app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173', credentials: true }));
+app.use(morgan('dev'));
+app.use(express.json({ limit: '10mb' }));
+
 // Ensure DB is connected before handling API requests
 app.use(async (req, res, next) => {
   try {
@@ -71,6 +58,11 @@ app.use(async (req, res, next) => {
     res.status(500).json({ message: 'Database connection failed' });
   }
 });
+
+// Routes
+app.use('/api/auth', authRouter);
+app.use('/api/projects', projectsRouter);
+app.use('/api/palettes', palettesRouter);
 
 if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
   connectDB().then(() => {
