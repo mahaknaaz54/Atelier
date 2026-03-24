@@ -35,17 +35,23 @@ app.use((_req, res) => {
 });
 
 // Connect to MongoDB then start server
+// Connect to MongoDB
 mongoose
   .connect(MONGODB_URI)
   .then(() => {
     console.log('✅ Connected to MongoDB');
-    app.listen(PORT, () => {
-      console.log(`🚀 Atelier API running on http://localhost:${PORT}`);
-    });
+    // Only listen if not running in a serverless environment like Vercel
+    if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+      app.listen(PORT, () => {
+        console.log(`🚀 Atelier API running on http://localhost:${PORT}`);
+      });
+    }
   })
   .catch((err) => {
     console.error('❌ MongoDB connection error:', err.message);
-    process.exit(1);
+    if (process.env.NODE_ENV !== 'production') {
+      process.exit(1);
+    }
   });
 
 export default app;
