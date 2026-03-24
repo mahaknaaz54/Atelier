@@ -34,11 +34,31 @@ app.use((_req, res) => {
   res.status(404).json({ message: 'Route not found' });
 });
 
-// Connect to MongoDB then start server
-// Connect to MongoDB
+// Serverless MongoDB Connection (Global Cache)
+declare global {
+  var mongoose: any;
+}
+let cached = global.mongoose;
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
+
 const connectDB = async () => {
-  if (mongoose.connection.readyState >= 1) return;
-  return mongoose.connect(MONGODB_URI);
+  if (cached.conn) return cached.conn;
+  if (!cached.promise) {
+    const opts = { bufferCommands: false, serverSelectionTimeoutMS: 5000 };
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+      console.log('✅ Connected to MongoDB');
+      return mongoose;
+    });
+  }
+  try {
+    cached.conn = await cached.promise;
+  } catch (e) {
+    cached.promise = null;
+    throw e;
+  }
+  return cached.conn;
 };
 
 // Ensure DB is connected before handling API requests
